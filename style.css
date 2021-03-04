@@ -1,0 +1,12 @@
+/* purgecss start ignore */
+@tailwind base;
+/* purgecss end ignore */
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html, body, #__next {
+        /*@apply m-0 h-full;*/
+        color: #98405f;
+    }
+}
