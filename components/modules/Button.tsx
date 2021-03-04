@@ -5,11 +5,13 @@ type Props = {
   handler: (e: SyntheticEvent) => void;
 }
 
-const Button: FC<Props> = ({children, handler}) => {
+const Button: FC<Props & React.ButtonHTMLAttributes<HTMLButtonElement>> = (props) => {
+  const {handler, children} = props;
   return (
     <button
       className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
       onClick={handler}
+      {...props}
     >
       {children}
     </button>

@@ -1,9 +1,13 @@
-import React from 'react';
+import React, {FC} from 'react';
 import Box from "../../modules/Box";
 import Button from '../../modules/Button';
 import Image from "next/dist/client/image";
 
-const Connect = () => {
+type Props = {
+  init: boolean;
+}
+
+const Connect: FC<Props> = ({init}) => {
   return (
     <Box>
       <span className={`flex items-center`}>
@@ -11,7 +15,7 @@ const Connect = () => {
         <p className={`ml-4`}>{"You'll need to connect your Metamask wallet to access Kiwi dApp features."}</p>
       </span>
       <div className={`mt-4`}>
-        <Button handler={() => console.log("ahhh")}>
+        <Button handler={() => console.log("ahhh")} disabled={!init}>
           Connect
         </Button>
       </div>

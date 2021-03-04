@@ -1,42 +1,32 @@
-import {ReducerState, useMemo} from 'react'
+import {useMemo} from 'react'
 import {createStore, applyMiddleware, Store, AnyAction} from 'redux'
-import { composeWithDevTools } from 'redux-devtools-extension'
+import {composeWithDevTools} from 'redux-devtools-extension'
 
 let store: Store | undefined;
 
-const initialState = {
-  lastUpdate: 0,
-  light: false,
-  count: 0,
+export type CustomState = {
+  metamask: {
+    init: boolean;
+  },
 }
+
+const initialState: CustomState = {
+  metamask: {
+    init: false,
+  },
+};
 
 const reducer = (state = initialState, action: AnyAction) => {
   switch (action.type) {
-    case 'TICK':
+    case 'SET_MM_INIT':
       return {
         ...state,
-        lastUpdate: action.lastUpdate,
-        light: !!action.light,
-      }
-    case 'INCREMENT':
-      return {
-        ...state,
-        count: state.count + 1,
-      }
-    case 'DECREMENT':
-      return {
-        ...state,
-        count: state.count - 1,
-      }
-    case 'RESET':
-      return {
-        ...state,
-        count: initialState.count,
+        metamask: {...state.metamask, init: action.payload}
       }
     default:
       return state
   }
-}
+};
 
 function initStore(preloadedState = initialState) {
   return createStore(
@@ -46,8 +36,8 @@ function initStore(preloadedState = initialState) {
   )
 }
 
-export const initializeStore = (preloadedState: ReducerState) => {
-  let _store = store || initStore(preloadedState)
+export const initializeStore = (preloadedState: CustomState) => {
+  let _store = store || initStore(preloadedState);
 
   // After navigating to a page with an initial Redux state, merge that state
   // with the current state in the store, and create a new store
@@ -55,18 +45,18 @@ export const initializeStore = (preloadedState: ReducerState) => {
     _store = initStore({
       ...store.getState(),
       ...preloadedState,
-    })
+    });
     // Reset the current store
     store = undefined
   }
 
   // For SSG and SSR always create a new store
-  if (typeof window === 'undefined') return _store
+  if (typeof window === 'undefined') return _store;
   // Create the store once in the client
-  if (!store) store = _store
+  if (!store) store = _store;
 
   return _store
-}
+};
 
 export function useStore(initialState: any) {
   const store = useMemo(() => initializeStore(initialState), [initialState])
