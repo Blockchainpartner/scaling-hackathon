@@ -6,7 +6,7 @@
 
 @layer base {
     html, body, #__next {
-        /*@apply m-0 h-full;*/
-        color: #98405f;
+        @apply m-0 h-full;
+        /*color: #98405f;*/
     }
 }
