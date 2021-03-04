@@ -1,6 +1,25 @@
 import React from 'react';
 import Image from 'next/image'
 import Wallet from '../components/Wallet/Wallet';
+import Web3 from "web3";
+
+declare global {
+  interface Window { web3: any; ethereum: any; }
+}
+
+if (typeof window !== "undefined") {
+  window.web3 = window.web3 || {};
+  window.ethereum = window.ethereum || {};
+
+  //Check function to see if the MetaMask extension is installed
+  const isMetaMaskInstalled = () => {
+    //Have to check the ethereum binding on the window object to see if it's installed
+    const { ethereum } = window;
+    return Boolean(ethereum && ethereum.isMetaMask);
+  };
+
+
+}
 
 const IndexPage = () => (
   <div>
