@@ -2,12 +2,32 @@ import React, {FC} from 'react';
 import Box from "../../modules/Box";
 import Button from '../../modules/Button';
 import Image from "next/dist/client/image";
+import MetaMaskOnboarding from '@metamask/onboarding';
 
 type Props = {
   init: boolean;
 }
 
 const Connect: FC<Props> = ({init}) => {
+  //We create a new MetaMask onboarding object to use in our app
+  const onboarding = new MetaMaskOnboarding();
+
+  //This will start the onboarding proccess
+  const onClickInstall = () => {
+    //On this object we have startOnboarding which will start the onboarding process for our end user
+    onboarding.startOnboarding();
+  };
+
+  const onClickConnect = async () => {
+    try {
+      // Will open the MetaMask UI
+      // You should disable this button while the request is pending!
+      if (typeof window !== undefined) await window.ethereum.request({method: 'eth_requestAccounts'});
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <Box>
       <span className={`flex items-center`}>
@@ -24,7 +44,7 @@ const Connect: FC<Props> = ({init}) => {
         )}
       </span>
       <div className={`mt-4`}>
-        <Button handler={() => console.log("ahhh")} disabled={!init}>
+        <Button handler={onClickConnect} disabled={!init}>
           Connect
         </Button>
       </div>
