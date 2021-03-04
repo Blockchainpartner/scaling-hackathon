@@ -9,4 +9,7 @@
         @apply m-0 h-full;
         /*color: #98405f;*/
     }
+    a {
+        @apply text-green-500;
+    }
 }

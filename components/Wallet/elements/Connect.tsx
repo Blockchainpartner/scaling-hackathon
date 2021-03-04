@@ -12,7 +12,16 @@ const Connect: FC<Props> = ({init}) => {
     <Box>
       <span className={`flex items-center`}>
         <Image src={`/images/mm.png`} alt={"Metamask"} height={'30px'} width={'40px'}/>
-        <p className={`ml-4`}>{"You'll need to connect your Metamask wallet to access Kiwi dApp features."}</p>
+        {init ? (
+          <p className={`ml-4`}>
+            You'll need to connect your Metamask wallet to access Kiwi dApp features.
+          </p>
+        ) : (
+          <p className={`ml-4`}>
+            You'll need to install the <a href="metamask.io">Metamask extension</a> or the <a href="brave.com">Brave
+            browser</a> to use the dApp.
+          </p>
+        )}
       </span>
       <div className={`mt-4`}>
         <Button handler={() => console.log("ahhh")} disabled={!init}>

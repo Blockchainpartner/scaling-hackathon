@@ -3,15 +3,15 @@ import React, {FC, ReactNode, SyntheticEvent} from 'react';
 type Props = {
   children: ReactNode;
   handler: (e: SyntheticEvent) => void;
+  disabled?: boolean;
 }
 
-const Button: FC<Props & React.ButtonHTMLAttributes<HTMLButtonElement>> = (props) => {
-  const {handler, children} = props;
+const Button: FC<Props> = ({children, handler, disabled}) => {
   return (
     <button
-      className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+      className={`disabled:cursor-not-allowed disabled:opacity-50 bg-green-500 ${!disabled && 'hover:bg-green-700'} text-white font-bold py-2 px-4 rounded`}
       onClick={handler}
-      {...props}
+      disabled={disabled || false}
     >
       {children}
     </button>
