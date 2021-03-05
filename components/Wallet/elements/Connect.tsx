@@ -16,7 +16,8 @@ const Connect: FC<Props> = ({init, accounts, onClickConnect, onClickInstall}) =>
       {accounts.length > 0 ? (
         <>
           <span className={`flex items-center`}>
-            <p>Your account: <code>{accounts[0]}</code></p>
+            <p>Your account: </p>
+            <code className={`bg-green-100`}>{accounts[0]}</code>
           </span>
         </>
       ) : (

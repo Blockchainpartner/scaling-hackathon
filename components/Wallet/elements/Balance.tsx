@@ -1,10 +1,14 @@
-import React from 'react';
+import React, {FC} from 'react';
 import Box from "../../modules/Box";
 
-const Balance = () => {
+type Props = {
+  balance: string;
+}
+
+const Balance: FC<Props> = ({balance}) => {
   return (
     <Box>
-      balance
+      <p>{`Your balance is `} <code className={`font-medium bg-green-100`}>{`${balance.length > 0 ? balance : 'not available.'}`}</code></p>
     </Box>
   );
 };
