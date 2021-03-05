@@ -1,41 +1,63 @@
-# TypeScript Next.js example
+![Kiwi](./public/images/logo_small.png)
 
-This is a really simple project that shows the usage of Next.js with TypeScript.
+# Kiwi dApp
+
+A training frontend project for `Tailwindcss`, `Web3` and `Metamask` integrations.
+
+[![forthebadge](https://forthebadge.com/images/badges/made-with-typescript.svg)](https://forthebadge.com)
 
 ## Deploy your own
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
+Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example)
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-typescript&project-name=with-typescript&repository-name=with-typescript)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2FBlockchainpartner%2Ftailwind-web3)
+## Demo
 
-## How to use it?
+Click on the logo to test the demo deployed with 
+[Vercel](https://vercel.com)
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
 
-```bash
-npx create-next-app --example with-typescript with-typescript-app
-# or
-yarn create next-app --example with-typescript with-typescript-app
-```
+[<img src="https://assets.vercel.com/image/upload/q_auto/front/favicon/vercel/180x180.png" width="40px"/>](https://test-mew.vercel.app/)
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+## Code Notes
 
-## Notes
+#### Web3 usage
 
-This example shows how to integrate the TypeScript type system into Next.js. Since TypeScript is supported out of the box with Next.js, all we have to do is to install TypeScript.
+This is the way web3 is instantiated.  
+Replace `givenProvider` by a custom RCP URI if needed.
 
-```
-npm install --save-dev typescript
-```
+![Kiwi](./public/images/doc1.png)
 
-To enable TypeScript's features, we install the type declarations for React and Node.
+#### Web3 Metamask setup
 
-```
-npm install --save-dev @types/react @types/react-dom @types/node
-```
+There are the main functions to setup for a minimal Metamask Onboarding.  
+- Checking if the extension is installed
+- Connect the user
+- And get the accounts: address and balance
 
-When we run `next dev` the next time, Next.js will start looking for any `.ts` or `.tsx` files in our project and builds it. It even automatically creates a `tsconfig.json` file for our project with the recommended settings.
+More documentation about Metamask Onboarding [here](https://docs.metamask.io/guide/create-dapp.html#basic-action-part-1).
 
-Next.js has built-in TypeScript declarations, so we'll get autocompletion for Next.js' modules straight away.
+![Kiwi](./public/images/doc2.png)
 
-A `type-check` script is also added to `package.json`, which runs TypeScript's `tsc` CLI in `noEmit` mode to run type-checking separately. You can then include this, for example, in your `test` scripts.
+#### promisify
+
+Util function used to resolve and manage web3 Promises.
+
+![Kiwi](./public/images/doc3.png)
+
+#### window + nextJs turnaround
+
+NextJs uses SSR and SSG. While serving the frontend, on the SSR phase, there is no `window` element, like on a client's browser.  
+Hence the turnaround.
+
+![Kiwi](./public/images/doc4.png)
+
+
+## Dependencies
+
+<img src="https://cdn.worldvectorlogo.com/logos/next-js.svg" alt="Next" width="30px"/>
+<img src="https://miro.medium.com/max/816/1*mn6bOs7s6Qbao15PMNRyOA.png" alt="TypeScript" width="30px"/>
+<img src="http://assets.stickpng.com/images/5848309bcef1014c0b5e4a9a.png" alt="Redux" width="30px"/>
+<img src="https://cdn.worldvectorlogo.com/logos/tailwindcss.svg" alt="TailwindCSS" width="30px"/>
+<img src="https://miro.medium.com/max/1400/1*2GHi9FwnyA5UTJpcxPSG7A.jpeg" alt="web3" width="30px"/>
+<img src="https://platform.eductx.org/static/media/metamask.5e06983f.png" alt="Metamask" width="30px"/>
