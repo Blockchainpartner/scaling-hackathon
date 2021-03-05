@@ -7,12 +7,14 @@ let store: Store | undefined;
 export type CustomState = {
   metamask: {
     init: boolean;
+    accounts: string[];
   },
 }
 
 const initialState: CustomState = {
   metamask: {
     init: false,
+    accounts: [],
   },
 };
 
@@ -22,7 +24,12 @@ const reducer = (state = initialState, action: AnyAction) => {
       return {
         ...state,
         metamask: {...state.metamask, init: action.payload}
-      }
+      };
+    case 'SET_ACCOUNTS':
+      return {
+        ...state,
+        accounts: action.payload.accounts,
+      };
     default:
       return state
   }
