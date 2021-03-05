@@ -1,16 +1,25 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import Box from "../../modules/Box";
 import Button from '../../modules/Button';
 import Image from "next/dist/client/image";
 import MetaMaskOnboarding from '@metamask/onboarding';
+import {isBrowser} from "../../../pages";
 
 type Props = {
   init: boolean;
 }
 
 const Connect: FC<Props> = ({init}) => {
-  //We create a new MetaMask onboarding object to use in our app
-  const onboarding = new MetaMaskOnboarding();
+  const [onboarding, setOnboarding] = useState<any>(null);
+
+  useEffect(() => {
+    if(!isBrowser()){
+      return;
+    }
+    //We create a new MetaMask onboarding object to use in our app
+    const ob = new MetaMaskOnboarding();
+    setOnboarding(ob);
+  }, []);
 
   //This will start the onboarding proccess
   const onClickInstall = () => {
@@ -21,7 +30,6 @@ const Connect: FC<Props> = ({init}) => {
   const onClickConnect = async () => {
     try {
       // Will open the MetaMask UI
-      // You should disable this button while the request is pending!
       if (typeof window !== undefined) await window.ethereum.request({method: 'eth_requestAccounts'});
     } catch (error) {
       console.error(error);
@@ -44,8 +52,8 @@ const Connect: FC<Props> = ({init}) => {
         )}
       </span>
       <div className={`mt-4`}>
-        <Button handler={onClickConnect} disabled={!init}>
-          Connect
+        <Button handler={init ? onClickConnect : onClickInstall} disabled={!init}>
+          {init ? 'Connect' : 'Install Extension'}
         </Button>
       </div>
     </Box>

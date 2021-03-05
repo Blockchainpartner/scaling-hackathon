@@ -10,11 +10,15 @@ declare global {
   }
 }
 
+export const isBrowser = () => typeof window !== "undefined";
+
 const IndexPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+      if (!isBrowser) {
+        return;
+      }
       window.web3 = window.web3 || {};
       window.ethereum = window.ethereum || {};
 
@@ -36,7 +40,8 @@ const IndexPage = () => {
         })
       }
     }
-  });
+  )
+  ;
 
   return (
     <div className={`flex flex-col items-center content-center m-auto text-center mt-20`}>
