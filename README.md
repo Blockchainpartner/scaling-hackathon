@@ -57,7 +57,7 @@ Hence the turnaround.
 
 <img src="https://cdn.worldvectorlogo.com/logos/next-js.svg" alt="Next" width="30px"/>
 <img src="https://miro.medium.com/max/816/1*mn6bOs7s6Qbao15PMNRyOA.png" alt="TypeScript" width="30px"/>
-<img src="http://assets.stickpng.com/images/5848309bcef1014c0b5e4a9a.png" alt="Redux" width="30px"/>
+<img src="https://lh3.googleusercontent.com/proxy/iMnwmr24qPpT9gjnR_4xNv97ykdyRKvScr4GGRQ14CJlKy8xwZ0Ev-Aiw4qtQEIu111WmlC0TH4hbsOv0Lp2q7MMX4ZGaqCP" alt="Redux" width="30px"/>
 <img src="https://cdn.worldvectorlogo.com/logos/tailwindcss.svg" alt="TailwindCSS" width="30px"/>
 <img src="https://miro.medium.com/max/1400/1*2GHi9FwnyA5UTJpcxPSG7A.jpeg" alt="web3" width="30px"/>
 <img src="https://platform.eductx.org/static/media/metamask.5e06983f.png" alt="Metamask" width="30px"/>
