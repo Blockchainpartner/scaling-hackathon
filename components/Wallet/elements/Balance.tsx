@@ -7,10 +7,27 @@ type Props = {
 
 const Balance: FC<Props> = ({balance}) => {
   return (
-    <Box>
-      <p>{`Your balance is `} <code className={`font-medium bg-green-100`}>{`${balance.length > 0 ? balance : 'not available.'}`}</code></p>
-    </Box>
-  );
+    <>
+      {!
+        balance.length ? (
+        <p className={`font-light mt-12`}>{`Your balance is not available yet.`}</p>
+      ) : (
+        <div className={`w-full flex`}>
+          <div className={`mr-2 w-1/2`}>
+            <Box>
+              {parseInt(balance).toFixed(6) + ' ETH'}
+            </Box>
+          </div>
+          <div className={`ml-2 w-1/2`}>
+            <Box>
+              aa
+            </Box>
+          </div>
+        </div>
+      )}
+    </>
+  )
+    ;
 };
 
 export default Balance;

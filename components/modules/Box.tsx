@@ -6,7 +6,7 @@ type Props = {
 
 const Box: FC<Props> = ({children}) => {
   return (
-    <div className={`my-5 p-8 w-full border-2 border-black rounded-md`}>
+    <div className={`my-5 p-8 w-full bg-gray-100 rounded-md`}>
       {children}
     </div>
   );

@@ -27,8 +27,8 @@ const TabButton: FC<TabButtonProps> = ({index, text, href, selected, selectedSty
   return (
     <Link href={href}>
         <a
-          className={`flex items-center text-gray-600 py-2 px-6 block hover:text-green-500 focus:outline-none ${selected === index && selectedStyle}`}>
-          {icon && heroIcon(icon, 'h-4 w-4 mr-2')}
+          className={`flex items-center text-gray-600 py-2 px-4 block hover:text-green-500 focus:outline-none ${selected === index && selectedStyle}`}>
+          {icon && heroIcon(icon, 'h-5 w-5 mr-2')}
           {text}
         </a>
     </Link>

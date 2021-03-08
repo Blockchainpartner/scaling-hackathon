@@ -1,6 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import Image from 'next/image'
-import Wallet from '../components/Wallet/Wallet';
 import {useDispatch, useSelector} from "react-redux";
 import Header from "../components/modules/Header";
 import Balance from "../components/Wallet/elements/Balance";
