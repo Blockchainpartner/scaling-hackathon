@@ -98,32 +98,31 @@ const IndexPage = () => {
   }, [accounts]);
 
   useEffect(() => {
-      if (!isBrowser) {
-        return;
-      }
-      window.web3 = window.web3 || {};
-      window.ethereum = window.ethereum || {};
+    if (!isBrowser) {
+      return;
+    }
+    window.web3 = window.web3 || {};
+    window.ethereum = window.ethereum || {};
 
-      //Check function to see if the MetaMask extension is installed
-      const isMetamaskInstalled = () => {
-        //Have to check the ethereum binding on the window object to see if it's installed
-        const {ethereum} = window;
-        return Boolean(ethereum && ethereum.isMetaMask);
-      };
+    //Check function to see if the MetaMask extension is installed
+    const isMetamaskInstalled = () => {
+      //Have to check the ethereum binding on the window object to see if it's installed
+      const {ethereum} = window;
+      return Boolean(ethereum && ethereum.isMetaMask);
+    };
 
-      const init = isMetamaskInstalled();
+    const init = isMetamaskInstalled();
 
-      if (init) {
-        dispatch({
-          type: 'SET_MM_INIT',
-          payload: {
-            init,
-          },
-        })
-      }
+    if (init) {
+      dispatch({
+        type: 'SET_MM_INIT',
+        payload: {
+          init,
+        },
+      })
+    }
     }, []
-  )
-  ;
+  );
 
   return (
     <div className={`w-1/2 flex flex-col items-center content-center m-auto text-center mt-20`}>
