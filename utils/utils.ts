@@ -9,4 +9,8 @@ const promisify = (inner: any) =>
     })
   );
 
-export {promisify}
+const atFormat = (str: string, n: number) => {
+  return (str.length > n) ? str.substr(0, n+1) + '....' + str.substr(str.length-n+1, str.length) : str;
+};
+
+export {promisify, atFormat}

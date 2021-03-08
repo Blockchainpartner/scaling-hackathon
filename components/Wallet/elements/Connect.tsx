@@ -1,6 +1,5 @@
 import React, {FC} from 'react';
 import Box from "../../modules/Box";
-import Button from '../../modules/Button';
 import Image from "next/dist/client/image";
 
 type Props = {

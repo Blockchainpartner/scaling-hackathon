@@ -3,6 +3,7 @@ import React, {FC} from 'react';
 import {useSelector} from "react-redux";
 import {CustomState} from "../../store/store";
 import Button from "../modules/Button";
+import {atFormat} from "../../utils/utils";
 
 type Props = {
   accounts: string[];
@@ -21,10 +22,12 @@ const Wallet: FC<Props> = ({accounts, onClickConnect, onClickInstall}) => {
           {init ? 'Connect' : 'Install Extension'}
         </Button>
       ) : (
-        <span className={`flex items-center`}>
-          <p>Your account: </p>
-          <code className={`bg-green-100`}>{accounts[0]}</code>
-        </span>
+        <div className={`flex py-4 px-6 rounded hover:bg-gray-100 hover:cursor-pointer`}>
+          <span className={`flex items-center mr-4`}>
+            <p className={`font-medium hover:underline`}>{atFormat(accounts[0], 5)}</p>
+          </span>
+          <img src={`https://api.multiavatar.com/${accounts[0]}.png`} alt={"Kiwi"} width={'35px'}/>
+        </div>
       )}
     </div>
   );
