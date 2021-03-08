@@ -8,6 +8,7 @@
     "type-check": "tsc"
   },
   "dependencies": {
+    "@coingecko/cg-api-ts": "^0.0.45",
     "next": "latest",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

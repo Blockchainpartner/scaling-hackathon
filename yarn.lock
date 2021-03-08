@@ -46,6 +46,11 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@coingecko/cg-api-ts@^0.0.45":
+  version "0.0.45"
+  resolved "https://registry.yarnpkg.com/@coingecko/cg-api-ts/-/cg-api-ts-0.0.45.tgz#a2d9dfab709b7a628a5379fb2a66fa87825f0432"
+  integrity sha512-p+oG4gVV1u7wHFy+aEeUJ75F1bAN3OYXUKfw36SzLRDtov9jRSz3+2LpzYA3Y2mmT4WAnsmSXfbcYHYsfGRMaA==
+
 "@ethersproject/abi@5.0.7":
   version "5.0.7"
   resolved "https://registry.yarnpkg.com/@ethersproject/abi/-/abi-5.0.7.tgz#79e52452bd3ca2956d0e1c964207a58ad1a0ee7b"
