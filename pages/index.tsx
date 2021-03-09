@@ -5,7 +5,7 @@ import Balance from "../components/Wallet/elements/Balance";
 import {CustomState} from "../store/store";
 import Web3 from "web3";
 import MetaMaskOnboarding from "@metamask/onboarding";
-import {promisify} from '../utils/utils';
+import {checkERC20Amount, promisify, usdcAdd, wbtcAdd} from '../utils/utils';
 import Connect from "../components/Wallet/elements/Connect";
 
 declare global {
@@ -26,6 +26,10 @@ const IndexPage = () => {
   const [accounts, setAccounts] = useState([]);
   const [onboarding, setOnboarding] = useState<any>(null);
   const [balance, setBalance] = useState('');
+  const [otherBalances, setOtherBalances] = useState({
+    wbtc: '',
+    usdc: ''
+  });
 
   const web3 = new Web3(Web3.givenProvider);
 
@@ -88,6 +92,9 @@ const IndexPage = () => {
       (async function () {
         try {
           await getBalance();
+          const wbtc = await checkERC20Amount(web3, accounts[0], wbtcAdd);
+          const usdc = await checkERC20Amount(web3, accounts[0], usdcAdd);
+          setOtherBalances({wbtc, usdc});
         } catch (e) {
           console.error(e);
         }
@@ -96,29 +103,29 @@ const IndexPage = () => {
   }, [accounts]);
 
   useEffect(() => {
-    if (!isBrowser) {
-      return;
-    }
-    window.web3 = window.web3 || {};
-    window.ethereum = window.ethereum || {};
+      if (!isBrowser) {
+        return;
+      }
+      window.web3 = window.web3 || {};
+      window.ethereum = window.ethereum || {};
 
-    //Check function to see if the MetaMask extension is installed
-    const isMetamaskInstalled = () => {
-      //Have to check the ethereum binding on the window object to see if it's installed
-      const {ethereum} = window;
-      return Boolean(ethereum && ethereum.isMetaMask);
-    };
+      //Check function to see if the MetaMask extension is installed
+      const isMetamaskInstalled = () => {
+        //Have to check the ethereum binding on the window object to see if it's installed
+        const {ethereum} = window;
+        return Boolean(ethereum && ethereum.isMetaMask);
+      };
 
-    const init = isMetamaskInstalled();
+      const init = isMetamaskInstalled();
 
-    if (init) {
-      dispatch({
-        type: 'SET_MM_INIT',
-        payload: {
-          init,
-        },
-      })
-    }
+      if (init) {
+        dispatch({
+          type: 'SET_MM_INIT',
+          payload: {
+            init,
+          },
+        })
+      }
     }, []
   );
 
@@ -126,7 +133,7 @@ const IndexPage = () => {
     <div className={`w-1/2 flex flex-col items-center content-center m-auto text-center mt-20`}>
       <Header accounts={accounts} onClickConnect={onClickConnect} onClickInstall={onClickInstall}/>
       {!accounts.length && <Connect init={init} onClickConnect={onClickConnect} onClickInstall={onClickInstall}/>}
-      <Balance balance={balance}/>
+      <Balance balance={balance} otherBalances={otherBalances}/>
     </div>
   );
 }

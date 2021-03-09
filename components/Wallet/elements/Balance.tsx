@@ -6,31 +6,31 @@ import AssetBox from "../../modules/AssetBox";
 const assets = [
   {
     id: 'eth',
-    balance: 0.00434521,
     ticker: 'ETH'
   },
   {
     id: 'usdc',
-    balance: 22.30,
     ticker: 'USDC'
   },
   {
     id: 'wbtc',
-    balance: 0.000021,
     ticker: 'wBTC'
   },
   {
     id: 'other',
-    balance: 0.00032312,
     ticker: 'Other ERC20'
   },
-]
+];
 
 type Props = {
   balance: string;
+  otherBalances: {
+    wbtc: string;
+    usdc: string;
+  }
 }
 
-const Balance: FC<Props> = ({balance}) => {
+const Balance: FC<Props> = ({balance, otherBalances}) => {
 
   const [eurPrice, setEurPrice] = useState<number | undefined>();
 
@@ -49,6 +49,8 @@ const Balance: FC<Props> = ({balance}) => {
     }
   }, [balance]);
 
+  const balances = {eth: balance, ...otherBalances, other: '0'};
+
   return (
     <>
       {!
@@ -65,7 +67,7 @@ const Balance: FC<Props> = ({balance}) => {
           </div>
           <div className={`ml-2 py-2 w-full grid grid-flow-col grid-cols-2 grid-rows-2 gap-4`}>
             {assets.map((asset) => (
-              <AssetBox id={asset.id} balance={asset.balance} ticker={asset.ticker}/>
+              <AssetBox key={asset.id} id={asset.id} balance={balances[asset.id]} ticker={asset.ticker}/>
             ))}
           </div>
         </div>
