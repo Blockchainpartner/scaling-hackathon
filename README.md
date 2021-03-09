@@ -128,6 +128,17 @@ Hence the turnaround.
 if (typeof window !== undefined)
 ```
 
+#### ERC20 token balances
+
+Function to use o get balances for other ERC20 tokens on the connected wallet (where `ERC20_JSON` is the JSON interface).
+
+```typescript
+async function checkERC20Amount(web3: any, userAddress: string, erc20Address: string) {
+  const	erc20Json = new web3.eth.Contract(ERC20_JSON, erc20Address);
+  const	balanceRightNow = await erc20Json.methods.balanceOf(userAddress).call().then((e: any) => e);
+  return web3.utils.fromWei(balanceRightNow);
+}
+```
 
 ## Dependencies
 
