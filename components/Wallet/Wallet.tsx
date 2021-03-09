@@ -24,7 +24,7 @@ const Wallet: FC<Props> = ({accounts, onClickConnect, onClickInstall}) => {
       ) : (
         <div className={`flex py-4 px-6 rounded hover:bg-gray-100 hover:cursor-pointer`}>
           <span className={`flex items-center mr-4`}>
-            <p className={`font-medium hover:underline`}>{atFormat(accounts[0], 5)}</p>
+            <p className={`font-normal hover:underline text-sm`}>{atFormat(accounts[0], 5)}</p>
           </span>
           <img src={`https://api.multiavatar.com/${accounts[0]}.png`} alt={"Kiwi"} width={'35px'}/>
         </div>
