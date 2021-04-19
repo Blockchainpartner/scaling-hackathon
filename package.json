@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "@coingecko/cg-api-ts": "^0.0.45",
+    "@toruslabs/openlogin": "^0.5.4",
+    "@toruslabs/torus-direct-web-sdk": "^4.11.1",
     "next": "latest",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

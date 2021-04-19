@@ -1,141 +1,122 @@
-import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import Header from "../components/modules/Header";
-import Balance from "../components/Wallet/elements/Balance";
-import {CustomState} from "../store/store";
-import Web3 from "web3";
-import MetaMaskOnboarding from "@metamask/onboarding";
-import {checkERC20Amount, promisify, usdcAdd, wbtcAdd} from '../utils/utils';
-import Connect from "../components/Wallet/elements/Connect";
+import React, { useEffect, useState } from "react";
+import Head from "next/head";
+import OpenLogin from "@toruslabs/openlogin";
+import useClientEffect from "../utils/useClientEffect";
 
-declare global {
-  interface Window {
-    web3: any;
-    ethereum: any;
-  }
-}
-
-export const isBrowser = () => typeof window !== "undefined";
+const VERIFIER = {
+  loginProvider: "google", // "facebook", "apple", "twitter", "reddit", etc. See full list of supported logins: https://docs.tor.us/direct-auth/supported-authenticators-verifiers
+  clientId: "YOUR PROJECT ID",
+};
 
 const IndexPage = () => {
-  const dispatch = useDispatch();
+  const [isLoading, setLoading] = useState(true);
 
-  const metamask = useSelector((state: CustomState) => state.metamask);
-  const {init} = metamask;
+  const [openlogin, setOpenLogin] = useState<undefined | OpenLogin>();
+  const [privKey, setPrivKey] = useState<undefined | string>();
 
-  const [accounts, setAccounts] = useState([]);
-  const [onboarding, setOnboarding] = useState<any>(null);
-  const [balance, setBalance] = useState('');
-  const [otherBalances, setOtherBalances] = useState({
-    wbtc: '',
-    usdc: ''
-  });
+  const onLogin = async () => {
+    if (isLoading || privKey) return;
 
-  const web3 = new Web3(Web3.givenProvider);
-
-  const checkAccounts = async () => {
-    //we use eth_accounts because it returns a list of addresses owned by us.
-    if (typeof window !== undefined) {
-      const mmAccounts = await window.ethereum.request({method: 'eth_accounts'});
-      setAccounts(mmAccounts);
-      dispatch({
-        type: 'SET_ACCOUNTS',
-        payload: {
-          accounts: mmAccounts,
-        },
+    setLoading(true);
+    try {
+      await openlogin?.login({
+        loginProvider: VERIFIER.loginProvider,
+        redirectUrl: "http://localhost:3000/redirect",
       });
-      await getBalance();
-    } else {
-      setAccounts(await []);
+      setPrivKey(openlogin?.privKey);
+    } finally {
+      setLoading(false);
     }
   };
 
-  //This will start the onboarding proccess
-  const onClickInstall = () => {
-    //On this object we have startOnboarding which will start the onboarding process for our end user
-    onboarding.startOnboarding();
-  };
+  useClientEffect(() => {
+    (async function () {
+      setLoading(true);
 
-  const onClickConnect = async () => {
-    try {
-      // Will open the MetaMask UI
-      if (typeof window !== undefined) await window.ethereum.request({method: 'eth_requestAccounts'});
-      await checkAccounts();
-    } catch (error) {
-      console.error(error);
-    }
-  };
+      try {
+        const openlogin = new OpenLogin({
+          clientId: VERIFIER.clientId,
+          iframeUrl: "http://beta.openlogin.com", // Beta version of OpenLogin
+          network: "testnet",
+        });
+        setOpenLogin(openlogin);
 
-  const getBalance = async () => {
-    let address: any, wei, mmBalance;
-    address = accounts[0];
-    wei = promisify((cb: any) => web3.eth.getBalance(address, cb));
-    try {
-      mmBalance = web3.utils.fromWei(await wei as string, 'ether');
-      setBalance(mmBalance);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    if (!isBrowser()) {
-      return;
-    }
-    //We create a new MetaMask onboarding object to use in our app
-    const ob = new MetaMaskOnboarding();
-    setOnboarding(ob);
+        await openlogin.init();
+        setPrivKey(openlogin.privKey);
+      } finally {
+        setLoading(false);
+      }
+    })();
   }, []);
 
-  useEffect(() => {
-    if (accounts.length > 0 && typeof window !== undefined) {
-      (async function () {
-        try {
-          await getBalance();
-          const wbtc = await checkERC20Amount(web3, accounts[0], wbtcAdd);
-          const usdc = await checkERC20Amount(web3, accounts[0], usdcAdd);
-          setOtherBalances({wbtc, usdc});
-        } catch (e) {
-          console.error(e);
-        }
-      })();
-    }
-  }, [accounts]);
-
-  useEffect(() => {
-      if (!isBrowser) {
-        return;
-      }
-      window.web3 = window.web3 || {};
-      window.ethereum = window.ethereum || {};
-
-      //Check function to see if the MetaMask extension is installed
-      const isMetamaskInstalled = () => {
-        //Have to check the ethereum binding on the window object to see if it's installed
-        const {ethereum} = window;
-        return Boolean(ethereum && ethereum.isMetaMask);
-      };
-
-      const init = isMetamaskInstalled();
-
-      if (init) {
-        dispatch({
-          type: 'SET_MM_INIT',
-          payload: {
-            init,
-          },
-        })
-      }
-    }, []
-  );
+  console.log(openlogin)
 
   return (
-    <div className={`w-1/2 flex flex-col items-center content-center m-auto text-center mt-20`}>
-      <Header accounts={accounts} onClickConnect={onClickConnect} onClickInstall={onClickInstall}/>
-      {!accounts.length && <Connect init={init} onClickConnect={onClickConnect} onClickInstall={onClickInstall}/>}
-      <Balance balance={balance} otherBalances={otherBalances}/>
+    <div className="flex flex-col items-center justify-center min-h-screen py-2">
+      <Head>
+        <title>Create Next App</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+      <main className="flex flex-col items-center justify-center flex-1 px-20 text-center">
+        <h1 className="text-6xl font-bold">
+          Welcome to{" "}
+          <a className="text-blue-600" href="https://nextjs.org">
+            ScalingETH!
+          </a>
+        </h1>
+
+        <p className="mt-3 text-2xl">
+          Sandbox to test{" "}
+          <code className="p-3 font-mono text-lg bg-gray-100 rounded-md">
+            Torus
+          </code>
+        </p>
+
+        <div className="flex flex-wrap items-center justify-around max-w-4xl mt-6 sm:w-full">
+          <div className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600">
+            <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
+            <p className="mt-4 text-xl">
+              Find in-depth information about Next.js features and API.
+            </p>
+          </div>
+
+          <div className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600">
+            <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
+            <p className="mt-4 text-xl">
+              Find in-depth information about Next.js features and API.
+            </p>
+          </div>
+
+          <div className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600">
+            <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
+            <p className="mt-4 text-xl">
+              Find in-depth information about Next.js features and API.
+            </p>
+          </div>
+
+          <div className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600">
+            <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
+            <p className="mt-4 text-xl">
+              Find in-depth information about Next.js features and API.
+            </p>
+          </div>
+        </div>
+      </main>
+
+      <footer className="flex items-center justify-center w-full h-24 border-t">
+        <a
+          className="flex items-center justify-center"
+          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Powered by{" "}
+          <img src="/vercel.svg" alt="Vercel Logo" className="h-4 ml-2" />
+        </a>
+      </footer>
     </div>
   );
-}
+};
 
-export default IndexPage
+export default IndexPage;
