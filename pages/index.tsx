@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import OpenLogin from "@toruslabs/openlogin";
-import useClientEffect from "../utils/useClientEffect";
+import dynamic from 'next/dynamic'
+
 
 const VERIFIER = {
   loginProvider: "google", // "facebook", "apple", "twitter", "reddit", etc. See full list of supported logins: https://docs.tor.us/direct-auth/supported-authenticators-verifiers
@@ -10,9 +11,13 @@ const VERIFIER = {
 
 const IndexPage = () => {
   const [isLoading, setLoading] = useState(true);
-
   const [openlogin, setOpenLogin] = useState<undefined | OpenLogin>();
   const [privKey, setPrivKey] = useState<undefined | string>();
+
+  const DynamicComponentWithNoSSR = dynamic(
+    () => import('../components/Torus'),
+    { ssr: false }
+  )
 
   const onLogin = async () => {
     if (isLoading || privKey) return;
@@ -29,35 +34,13 @@ const IndexPage = () => {
     }
   };
 
-  useClientEffect(() => {
-    (async function () {
-      setLoading(true);
-
-      try {
-        const openlogin = new OpenLogin({
-          clientId: VERIFIER.clientId,
-          iframeUrl: "http://beta.openlogin.com", // Beta version of OpenLogin
-          network: "testnet",
-        });
-        setOpenLogin(openlogin);
-
-        await openlogin.init();
-        setPrivKey(openlogin.privKey);
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, []);
-
-  console.log(openlogin)
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
+      <DynamicComponentWithNoSSR />
       <main className="flex flex-col items-center justify-center flex-1 px-20 text-center">
         <h1 className="text-6xl font-bold">
           Welcome to{" "}
