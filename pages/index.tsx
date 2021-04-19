@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import OpenLogin from "@toruslabs/openlogin";
-import dynamic from 'next/dynamic'
-
+import dynamic from "next/dynamic";
 
 const VERIFIER = {
   loginProvider: "google", // "facebook", "apple", "twitter", "reddit", etc. See full list of supported logins: https://docs.tor.us/direct-auth/supported-authenticators-verifiers
@@ -10,29 +9,13 @@ const VERIFIER = {
 };
 
 const IndexPage = () => {
-  const [isLoading, setLoading] = useState(true);
-  const [openlogin, setOpenLogin] = useState<undefined | OpenLogin>();
-  const [privKey, setPrivKey] = useState<undefined | string>();
-
   const DynamicComponentWithNoSSR = dynamic(
-    () => import('../components/Torus'),
+    // @ts-ignore
+    () => import("../components/Torus.tsx"),
     { ssr: false }
-  )
+  );
 
-  const onLogin = async () => {
-    if (isLoading || privKey) return;
-
-    setLoading(true);
-    try {
-      await openlogin?.login({
-        loginProvider: VERIFIER.loginProvider,
-        redirectUrl: "http://localhost:3000/redirect",
-      });
-      setPrivKey(openlogin?.privKey);
-    } finally {
-      setLoading(false);
-    }
-  };
+  console.log(DynamicComponentWithNoSSR);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
@@ -40,7 +23,6 @@ const IndexPage = () => {
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <DynamicComponentWithNoSSR />
       <main className="flex flex-col items-center justify-center flex-1 px-20 text-center">
         <h1 className="text-6xl font-bold">
           Welcome to{" "}
@@ -55,6 +37,10 @@ const IndexPage = () => {
             Torus
           </code>
         </p>
+
+        <div className="my-8">
+          <DynamicComponentWithNoSSR />
+        </div>
 
         <div className="flex flex-wrap items-center justify-around max-w-4xl mt-6 sm:w-full">
           <div className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600">
