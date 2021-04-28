@@ -16,11 +16,15 @@ const SidebarWrapper: FC<{ children: ReactNode }> = ({ children }) => {
             <img src="/images/turbo.svg" alt="Sidebar icon" className="p-2" />
           </div>
           <div className="h-1 w-1/2 bg-white rounded-sm my-4 mx-auto" />
-          <div className={pathname === "/home" ? "sidebtn-active" : "sidebtn"}>
+          <div
+            className={pathname === "/home" ? "sidebtn-active" : "sidebtn"}
+            onClick={() => router.push("/home")}
+          >
             <HomeIcon color={pathname === "/home" ? "white" : "lightgray"} />
           </div>
           <div
             className={pathname === "/identity" ? "sidebtn-active" : "sidebtn"}
+            onClick={() => router.push("/identity")}
           >
             <ProfileIcon
               color={pathname === "/identity" ? "white" : "lightgray"}

@@ -36,3 +36,12 @@ export type UserId = {
   };
   registered: { age: number; date: string };
 };
+
+export type MockService = {
+  id: number;
+  logo: string;
+  title: string;
+  issuer: string;
+  description: string;
+  cta?: string;
+};
