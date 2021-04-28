@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import useSWR from "swr";
 import ScreenTitle from "../components/ScreenTitle/ScreenTitle";
 import SidebarWrapper from "../components/Sidebar/SidebarWrapper";
 import FireIcon from "../components/icons/FireIcon";
 import { UserId } from "../utils/types";
+import VerifiedBadge from "../components/icons/VerifiedBadge";
 
 const RANDOMUSER_URI = "https://randomuser.me/api/";
 
@@ -31,15 +32,17 @@ const loadingContent = () => (
 
 const Identity = () => {
   const { data, error } = useSWR("/api/user", userFetcher, revalOptions);
-  console.log(data);
   const user = data?.results[0] as UserId;
+
+  const [verified, setVerified] = useState(false);
+
   return (
     <SidebarWrapper>
       <ScreenTitle
         title="Identity Board"
         subTitle="You can manage your ID and KYC data through this board"
       />
-      <div className="board w-3/5">
+      <div className="board w-3/5 relative">
         {error ? errorContent() : null}
         {!data ? loadingContent() : null}
         {data ? (
@@ -51,6 +54,12 @@ const Identity = () => {
               </div>
             </div>
             <code className="text-md">{`0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce`}</code>
+
+            {verified ? (
+              <div className="absolute top-4 right-4">
+                <VerifiedBadge />
+              </div>
+            ) : null}
 
             <div className="mt-10">
               <div className="flex items-baseline mb-3">
