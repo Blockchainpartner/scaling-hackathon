@@ -8,6 +8,7 @@ module.exports = {
         dBrand: "#140e63",
         bg: "#F5EEFF",
         dark: "#17181C",
+        lDark: "#434343",
         mGray: "#979797",
         sideGray: "#2C2D31",
         sideIcon: "#979797",

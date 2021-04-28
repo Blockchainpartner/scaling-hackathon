@@ -12,6 +12,10 @@
     /*color: #98405f;*/
   }
 
+  p {
+    @apply text-dark;
+  }
+
   .btn-primary {
     @apply py-3 px-4 bg-brand text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75;
   }
@@ -22,6 +26,10 @@
 
   .sidebtn-active {
     @apply w-14 h-14 flex justify-center items-center rounded-lg bg-brand text-white my-2;
+  }
+
+  .board {
+    @apply bg-white px-12 py-7 rounded-lg;
   }
 
   .circle {
