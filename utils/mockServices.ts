@@ -8,10 +8,13 @@ export const mockServices: MockService[] = [
     issuer: "SNCF",
     description:
       "You are eligible to reduced fares on train tickets if you are between 12 and 27 years old, or if you have a disability.",
-    cta: "GET TICKETS",
+    cta: {
+      title: "GET TICKETS",
+      path: "train",
+    },
   },
   {
-    id: 1,
+    id: 2,
     logo: "logoAF.png",
     title: "Missed flight insurance",
     issuer: "Airfrance",
@@ -19,7 +22,7 @@ export const mockServices: MockService[] = [
       "You can use this proof to demonstrate that you are on a list of travelers, in case your flight is cancelled.",
   },
   {
-    id: 1,
+    id: 3,
     logo: "logoFC.png",
     title: "18+ year old proof",
     issuer: "France Conntect",

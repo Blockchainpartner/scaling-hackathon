@@ -7,7 +7,7 @@ import QuitIcon from "./icons/QuitIcon";
 
 const SidebarWrapper: FC<{ children: ReactNode }> = ({ children }) => {
   const router = useRouter();
-  const { pathname } = router;
+  const pathname = "/" + router.pathname.split("/")[1];
   return (
     <div className="bg-bg flex min-h-screen w-full">
       <nav className="bg-dark w-20 h-screen fixed flex flex-col items-center justify-between py-2">
@@ -17,10 +17,10 @@ const SidebarWrapper: FC<{ children: ReactNode }> = ({ children }) => {
           </div>
           <div className="h-1 w-1/2 bg-white rounded-sm my-4 mx-auto" />
           <div
-            className={pathname === "/home" ? "sidebtn-active" : "sidebtn"}
-            onClick={() => router.push("/home")}
+            className={pathname === "/proof" ? "sidebtn-active" : "sidebtn"}
+            onClick={() => router.push("/proof")}
           >
-            <HomeIcon color={pathname === "/home" ? "white" : "lightgray"} />
+            <HomeIcon color={pathname === "/proof" ? "white" : "lightgray"} />
           </div>
           <div
             className={pathname === "/identity" ? "sidebtn-active" : "sidebtn"}

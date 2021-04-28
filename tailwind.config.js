@@ -14,7 +14,7 @@ module.exports = {
         sideIcon: "#979797",
         danger: "#C84B4B",
         lSuccess: "#90E586",
-        success: "#0CAB2C"
+        success: "#0CAB2C",
       },
       borderRadius: {
         DEFAULT: ".5rem",

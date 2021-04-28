@@ -43,5 +43,8 @@ export type MockService = {
   title: string;
   issuer: string;
   description: string;
-  cta?: string;
+  cta?: {
+    title: string;
+    path: string;
+  };
 };
