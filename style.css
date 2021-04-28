@@ -32,6 +32,10 @@
     @apply bg-white px-12 py-7 rounded-lg;
   }
 
+  .board-disabled {
+    @apply bg-disabled px-12 py-7 rounded-lg cursor-not-allowed;
+  }
+
   .circle {
     display: inline-block;
     border-radius: 50%;

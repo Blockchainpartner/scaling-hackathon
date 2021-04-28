@@ -15,6 +15,7 @@ module.exports = {
         danger: "#C84B4B",
         lSuccess: "#90E586",
         success: "#0CAB2C",
+        disabled: "#E6E6E6",
       },
       borderRadius: {
         DEFAULT: ".5rem",

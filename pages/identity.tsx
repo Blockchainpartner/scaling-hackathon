@@ -100,7 +100,7 @@ const Identity = () => {
                 <MockDoc filename="IdCard.png" size="0.4Mb" />
               </div>
               <button className="btn-primary mt-8 py-6 w-full">
-                SAVE IDENTITY INFO
+                VERIFY & SAVE IDENTITY
               </button>
             </div>
           </div>

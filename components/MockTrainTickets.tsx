@@ -1,6 +1,8 @@
+import { useRouter } from "next/dist/client/router";
 import React, { FC } from "react";
 
 const MockItem: FC<{ time: string; price: string }> = ({ time, price }) => {
+  const router = useRouter();
   return (
     <div className="board flex flex-col xl:flex-row items-start xl:items-center justify-between w-full xl:w-4/5">
       <div className="flex flex-col xl:flex-row items-start xl:items-center">
@@ -16,7 +18,12 @@ const MockItem: FC<{ time: string; price: string }> = ({ time, price }) => {
       </div>
       <div className="flex flex-col xl:flex-row items-start xl:items-center">
         <p className="font-bold text-2xl mr-8">{price}</p>
-        <button className="btn-primary h-12">BOOK</button>
+        <button
+          className="btn-primary h-12"
+          onClick={() => router.push("/proof/train/book")}
+        >
+          BOOK
+        </button>
       </div>
     </div>
   );
