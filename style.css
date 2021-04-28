@@ -16,6 +16,14 @@
     @apply py-3 px-4 bg-brand text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75;
   }
 
+  .sidebtn {
+    @apply w-14 h-14 flex justify-center items-center rounded-lg bg-sideGray text-sideIcon my-2 cursor-pointer hover:bg-indigo-700;
+  }
+
+  .sidebtn-active {
+    @apply w-14 h-14 flex justify-center items-center rounded-lg bg-brand text-white my-2;
+  }
+
   .circle {
     display: inline-block;
     border-radius: 50%;

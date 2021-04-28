@@ -9,12 +9,15 @@ module.exports = {
         bg: "#F5EEFF",
         dark: "#17181C",
         mGray: "#979797",
+        sideGray: "#2C2D31",
+        sideIcon: "#979797",
+        danger: "#C84B4B",
       },
       borderRadius: {
         DEFAULT: ".5rem",
       },
       fontFamily: {
-        sans: ['Open Sans'],
+        sans: ["Open Sans"],
       },
     },
   },

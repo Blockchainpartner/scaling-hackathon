@@ -2,7 +2,7 @@ import React from "react";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 
-const IndexPage = () => {
+const TorusTest = () => {
   const DynamicComponentWithNoSSR = dynamic(
     // @ts-ignore
     () => import("../components/Torus.tsx"),
@@ -53,4 +53,4 @@ const IndexPage = () => {
   );
 };
 
-export default IndexPage;
+export default TorusTest;
