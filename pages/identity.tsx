@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import useSWR from "swr";
-import ScreenTitle from "../components/ScreenTitle/ScreenTitle";
-import SidebarWrapper from "../components/Sidebar/SidebarWrapper";
+import ScreenTitle from "../components/ScreenTitle";
+import SidebarWrapper from "../components/SidebarWrapper";
 import FireIcon from "../components/icons/HelpIcon";
 import { UserId } from "../utils/types";
 import VerifiedBadge from "../components/icons/VerifiedBadge";
@@ -36,7 +36,7 @@ const Identity = () => {
   const { data, error } = useSWR("/api/user", userFetcher, revalOptions);
   const user = data?.results[0] as UserId;
 
-  const [verified, setVerified] = useState(false);
+  const [verified, ] = useState(false);
 
   return (
     <SidebarWrapper>
@@ -48,8 +48,8 @@ const Identity = () => {
       {!data ? loadingContent() : null}
       {data ? (
         <div>
-          <div className="flex">
-            <div className="board w-3/5 relative">
+          <div className="flex items-center xl:items-start flex-col xl:flex-row">
+            <div className="board w-full mb-8 xl:mb-0 xl:w-3/5 relative">
               <div>
                 <div className="flex items-baseline">
                   <p className="text-3xl">{`${user.name.first} ${user.name.last}`}</p>
@@ -91,7 +91,7 @@ const Identity = () => {
               </div>
             </div>
 
-            <div className="flex-grow ml-8">
+            <div className="flex-grow flex flex-col justify-between w-full xl:w-min xl:ml-8">
               <div className="board h-5/6">
                 <p className="text-2xl mb-4">Files and documents</p>
                 <MockDoc filename="passport.pdf" size="2.1Mb"/>

@@ -1,9 +1,9 @@
 import { useRouter } from "next/dist/client/router";
 import React, { FC, ReactNode } from "react";
-import HelpIcon from "../icons/HelpIcon";
-import HomeIcon from "../icons/HomeIcon";
-import ProfileIcon from "../icons/ProfileIcon";
-import QuitIcon from "../icons/QuitIcon";
+import HelpIcon from "./icons/HelpIcon";
+import HomeIcon from "./icons/HomeIcon";
+import ProfileIcon from "./icons/ProfileIcon";
+import QuitIcon from "./icons/QuitIcon";
 
 const SidebarWrapper: FC<{ children: ReactNode }> = ({ children }) => {
   const router = useRouter();
@@ -36,7 +36,7 @@ const SidebarWrapper: FC<{ children: ReactNode }> = ({ children }) => {
           </div>
         </div>
       </nav>
-      <div className="py-24 mx-32 w-full">{children}</div>
+      <div className="py-24 mx-40 w-full">{children}</div>
     </div>
   );
 };
