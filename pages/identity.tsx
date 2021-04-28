@@ -92,7 +92,7 @@ const Identity = () => {
             </div>
 
             <div className="flex-grow ml-8">
-              <div className="board h-4/5">
+              <div className="board h-5/6">
                 <p className="text-2xl mb-4">Files and documents</p>
                 <MockDoc filename="passport.pdf" size="2.1Mb"/>
                 <MockDoc filename="disabilty_certificate.pdf" size="4.3Mb"/>

@@ -13,7 +13,7 @@ const IndexPage = () => {
       <img
         src="/images/homeGroup.png"
         alt="Turo Proof"
-        className="h-2/5 w-2/5 ml-2"
+        className="h-1/3 w-1/3 mr-6"
       />
       <div className="flex flex-col items-start w-1/3 ml-24">
         <img src="/images/fullLogo.png" alt="Turo Proof" className="h-20" />
