@@ -21,11 +21,11 @@
   }
 
   .sidebtn {
-    @apply w-14 h-14 flex justify-center items-center rounded-lg bg-sideGray text-sideIcon my-2 cursor-pointer hover:bg-indigo-700;
+    @apply w-12 h-12 flex justify-center items-center rounded-lg bg-sideGray text-sideIcon my-2 cursor-pointer hover:bg-indigo-700;
   }
 
   .sidebtn-active {
-    @apply w-14 h-14 flex justify-center items-center rounded-lg bg-brand text-white my-2;
+    @apply w-12 h-12 flex justify-center items-center rounded-lg bg-brand text-white my-2;
   }
 
   .board {
