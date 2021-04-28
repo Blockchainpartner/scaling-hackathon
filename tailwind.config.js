@@ -4,26 +4,25 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        brand: {
-          100: '#ee8133',
-          500: '#cbd37a',
-        },
-        primary: {
-          100: '#98405f',
-          500: '#62293d',
-        },
-        background: '#ebe6f7',
+        brand: "#1F169C",
+        dBrand: "#140e63",
+        bg: "#F5EEFF",
+        dark: "#17181C",
+        mGray: "#979797",
       },
       borderRadius: {
-        DEFAULT: '.5rem',
+        DEFAULT: ".5rem",
+      },
+      fontFamily: {
+        sans: ['Open Sans'],
       },
     },
   },
   variants: {
     extend: {
-      opacity: ['disabled'],
-      cursor: ['disabled', 'hover'],
+      opacity: ["disabled"],
+      cursor: ["disabled", "hover"],
     },
   },
   plugins: [],
-}
+};

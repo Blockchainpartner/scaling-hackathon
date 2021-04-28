@@ -11,6 +11,11 @@
     @apply m-0 h-full;
     /*color: #98405f;*/
   }
+
+  .btn-primary {
+    @apply py-3 px-4 bg-brand text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75;
+  }
+
   .circle {
     display: inline-block;
     border-radius: 50%;

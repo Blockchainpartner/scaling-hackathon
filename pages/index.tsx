@@ -9,46 +9,28 @@ const IndexPage = () => {
     { ssr: false }
   );
 
-  console.log(DynamicComponentWithNoSSR);
-
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <main className="flex flex-col items-center justify-center flex-1 px-20 text-center">
-        <h1 className="text-6xl font-bold">
-          Welcome to{" "}
-          <a className="text-blue-600" href="https://nextjs.org">
-            ScalingETH!
-          </a>
-        </h1>
-
-        <p className="mt-3 text-2xl">
-          Sandbox to test{" "}
-          <code className="p-3 font-mono text-lg bg-gray-100 rounded-md">
-            Torus
-          </code>
+    <div className="bg-bg flex items-center justify-center min-h-screen py-2">
+      <img
+        src="/images/homeGroup.png"
+        alt="Turo Proof"
+        className="h-2/5 w-2/5 ml-2"
+      />
+      <div className="flex flex-col items-start w-1/3 ml-24">
+        <img src="/images/fullLogo.png" alt="Turo Proof" className="h-20" />
+        <p className="text-dark font-semibold text-3xl w-2/3 mt-8">
+          Prove your identity features without revealing it.
         </p>
-
-        <div className="my-8">
-          <DynamicComponentWithNoSSR />
+        <button className="btn-primary mt-12 w-1/3">GET STARTED</button>
+        <div className="flex flex-col items-start mt-24">
+          <p className="text-mGray text-lg">Powered by</p>
+          <div className="mt-6 flex justify-start">
+            <img src="/images/logoTorus.png" alt="Torus" className="h-8" />
+            <img src="/images/logoCairo.png" alt="Cairo" className="h-8 ml-3" />
+            <img src="/images/logoStark.svg" alt="Stark" className="h-8 ml-3" />
+          </div>
         </div>
-
-      </main>
-
-      <footer className="flex items-center justify-center w-full h-24 border-t">
-        <a
-          className="flex items-center justify-center"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{" "}
-          <img src="/vercel.svg" alt="Vercel Logo" className="h-4 ml-2" />
-        </a>
-      </footer>
+      </div>
     </div>
   );
 };
