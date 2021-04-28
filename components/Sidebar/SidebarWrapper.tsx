@@ -1,6 +1,6 @@
 import { useRouter } from "next/dist/client/router";
 import React, { FC, ReactNode } from "react";
-import HelpIcon from "../icons/FireIcon";
+import HelpIcon from "../icons/HelpIcon";
 import HomeIcon from "../icons/HomeIcon";
 import ProfileIcon from "../icons/ProfileIcon";
 import QuitIcon from "../icons/QuitIcon";
