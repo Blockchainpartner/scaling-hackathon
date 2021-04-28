@@ -36,7 +36,7 @@ const Identity = () => {
   const { data, error } = useSWR("/api/user", userFetcher, revalOptions);
   const user = data?.results[0] as UserId;
 
-  const [verified, ] = useState(false);
+  const [verified] = useState(false);
 
   return (
     <SidebarWrapper>
@@ -51,9 +51,10 @@ const Identity = () => {
           <div className="flex items-center xl:items-start flex-col xl:flex-row">
             <div className="board w-full mb-8 xl:mb-0 xl:w-3/5 relative">
               <div>
-                <div className="flex items-baseline">
-                  <p className="text-3xl">{`${user.name.first} ${user.name.last}`}</p>
-                  <div className="px-2 py-0.5 rounded-3xl bg-brand text-xs text-white ml-4">
+                <div className="flex items-center">
+                <img src={user.picture.thumbnail} alt="Profile picture" className="rounded-full" />
+                  <p className="text-3xl ml-4">{`${user.name.first} ${user.name.last}`}</p>
+                  <div className="px-2 py-0.5 rounded-3xl bg-brand text-xs text-white ml-4 self-end">
                     individual
                   </div>
                 </div>
@@ -94,11 +95,13 @@ const Identity = () => {
             <div className="flex-grow flex flex-col justify-between w-full xl:w-min xl:ml-8">
               <div className="board h-5/6">
                 <p className="text-2xl mb-4">Files and documents</p>
-                <MockDoc filename="passport.pdf" size="2.1Mb"/>
-                <MockDoc filename="disabilty_certificate.pdf" size="4.3Mb"/>
-                <MockDoc filename="IdCard.png" size="0.4Mb"/>
+                <MockDoc filename="passport.pdf" size="2.1Mb" />
+                <MockDoc filename="disabilty_certificate.pdf" size="4.3Mb" />
+                <MockDoc filename="IdCard.png" size="0.4Mb" />
               </div>
-              <button className="btn-primary mt-8 py-6 w-full">SAVE IDENTITY INFO</button>
+              <button className="btn-primary mt-8 py-6 w-full">
+                SAVE IDENTITY INFO
+              </button>
             </div>
           </div>
         </div>
