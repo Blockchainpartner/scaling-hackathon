@@ -589,10 +589,10 @@
     lodash.merge "^4.6.2"
     pump "^3.0.0"
 
-"@toruslabs/torus-direct-web-sdk@^4.11.1":
-  version "4.11.1"
-  resolved "https://registry.yarnpkg.com/@toruslabs/torus-direct-web-sdk/-/torus-direct-web-sdk-4.11.1.tgz#52f253a77fbddd21249040f767907386abe309df"
-  integrity sha512-cgjc/26W99Oi6D2gX6xDsIOjRuVQRHcubL0HnJaWK7mZxn9wbv5+OjzZrrCJSgMFlcs2THQDu9xi/y6VVuME1A==
+"@toruslabs/torus-direct-web-sdk@^4.12.0":
+  version "4.12.0"
+  resolved "https://registry.yarnpkg.com/@toruslabs/torus-direct-web-sdk/-/torus-direct-web-sdk-4.12.0.tgz#be88e06c8485ca1b19d8d6113729a9561ff93df3"
+  integrity sha512-8//nNVkJQB9UmprZOI9y569FmUThdRM8gm5SOcnGm5nkGdE3k81z9w4g+4FF39FkalCduKwm/xudVu+pFheVKQ==
   dependencies:
     "@chaitanyapotti/random-id" "^1.0.3"
     "@chaitanyapotti/register-service-worker" "^1.7.3"

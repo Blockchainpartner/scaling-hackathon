@@ -2,9 +2,9 @@ import React from "react";
 import dynamic from "next/dynamic";
 
 const IndexPage = () => {
-  const DynamicComponentWithNoSSR = dynamic(
+  const TorusSetupButton = dynamic(
     // @ts-ignore
-    () => import("../components/Torus.tsx"),
+    () => import("../components/TorusSetup.tsx"),
     { ssr: false }
   );
 
@@ -20,7 +20,7 @@ const IndexPage = () => {
         <p className="text-dark font-semibold text-3xl w-2/3 mt-8">
           Prove your identity features without revealing it.
         </p>
-        <button className="btn-primary mt-12 w-1/3">GET STARTED</button>
+        <TorusSetupButton />
         <div className="flex flex-col items-start mt-24">
           <p className="text-mGray text-lg">Powered by</p>
           <div className="mt-6 flex justify-start">

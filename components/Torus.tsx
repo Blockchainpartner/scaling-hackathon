@@ -66,6 +66,8 @@ const TorusInit: FC = () => {
   const [torus, setTorus] = useState<any>();
   const [account, setAccount] = useState<any>();
 
+  console.log("TORUS", torus);
+
   useClientEffect(() => {
     (async function () {
       try {
@@ -78,7 +80,6 @@ const TorusInit: FC = () => {
         setOpenLogin(openlogin);
         await openlogin.init();
         setPrivKey(openlogin.privKey);
-
         //Torus Wallet
         const torus = new Torus({});
         await torus.init({
@@ -91,13 +92,32 @@ const TorusInit: FC = () => {
     })();
   }, []);
 
+  // useEffect(() => {
+  //   (async function () {
+  //     try {
+  //       if (torus && openlogin) {
+  //         setLoading(true);
+  //         //OpenLogin
+  //         const pk = openlogin.login({
+  //           fastLogin: true,
+  //           loginProvider: torus.typeOfLogin,
+  //         });
+  //         await openlogin.init();
+  //         setPrivKey(openlogin.privKey);
+  //       }
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   })();
+  // }, [torus, openlogin]);
+
   const onLogin = async () => {
     if (isLoading || privKey) return;
     setLoading(true);
     try {
       await openlogin?.login({
         loginProvider: VERIFIER.loginProvider,
-        redirectUrl: "http://localhost:3000",
+        redirectUrl: "http://localhost:3000/torus-test",
       });
       setPrivKey(openlogin?.privKey);
     } finally {
@@ -118,7 +138,7 @@ const TorusInit: FC = () => {
 
   const onTorusLogin = async () => {
     if (isLoading || !torus) return;
-    await torus?.login({ verifier: VERIFIER.loginProvider });
+    await torus?.login();
   };
 
   //Grab account when logged in
