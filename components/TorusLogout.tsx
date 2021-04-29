@@ -2,6 +2,7 @@ import React, { FC, useState } from "react";
 import OpenLogin from "@toruslabs/openlogin";
 import useClientEffect from "../utils/useClientEffect";
 import { useRouter } from "next/dist/client/router";
+import QuitIcon from "./icons/QuitIcon";
 
 const VERIFIER = {
   loginProvider: "google",
@@ -9,7 +10,7 @@ const VERIFIER = {
     "BKQWaPaXrysRPuTPHC_3_x5rCeR5-e0C4nQbXFRYF_plX72Du3a03DJNhw0btY5lI6L6lruPjE7p42JxwaBVU0M",
 };
 
-const TorusSetup: FC = () => {
+const TorusLogout: FC = () => {
   const router = useRouter();
 
   const [isLoading, setLoading] = useState(true);
@@ -35,26 +36,23 @@ const TorusSetup: FC = () => {
     })();
   }, []);
 
-  const onLogin = async () => {
-    if (isLoading || privKey) return;
+  const onLogout = async () => {
+    if (isLoading || !privKey) return;
     setLoading(true);
     try {
-      await openlogin?.login();
-      setPrivKey(openlogin?.privKey);
+      await openlogin?.logout();
+      setPrivKey(undefined);
+      router.push("/");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <button
-      className="btn-primary mt-12 w-1/3 disabled:opacity-50 disabled:cursor-not-allowed"
-      disabled={!openlogin || isLoading}
-      onClick={privKey ? () => router.push("/identity") : onLogin}
-    >
-      {isLoading ? "⏳" : "GET STARTED"}
-    </button>
+    <div className="sidebtn" onClick={onLogout}>
+      <QuitIcon color="#C84B4B" />
+    </div>
   );
 };
 
-export default TorusSetup;
+export default TorusLogout;

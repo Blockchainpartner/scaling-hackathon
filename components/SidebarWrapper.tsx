@@ -1,11 +1,17 @@
-import { useRouter } from "next/dist/client/router";
 import React, { FC, ReactNode } from "react";
+import { useRouter } from "next/dist/client/router";
+import dynamic from "next/dynamic";
 import HelpIcon from "./icons/HelpIcon";
 import HomeIcon from "./icons/HomeIcon";
 import ProfileIcon from "./icons/ProfileIcon";
-import QuitIcon from "./icons/QuitIcon";
 
 const SidebarWrapper: FC<{ children: ReactNode }> = ({ children }) => {
+  const TorusLogoutButton = dynamic(
+    // @ts-ignore
+    () => import("../components/TorusLogout.tsx"),
+    { ssr: false }
+  );
+
   const router = useRouter();
   const pathname = "/" + router.pathname.split("/")[1];
   return (
@@ -35,9 +41,7 @@ const SidebarWrapper: FC<{ children: ReactNode }> = ({ children }) => {
           <div className="sidebtn">
             <HelpIcon color="lightgray" />
           </div>
-          <div className="sidebtn">
-            <QuitIcon color="#C84B4B" />
-          </div>
+          <TorusLogoutButton />
         </div>
       </nav>
       <div className="py-24 mx-40 w-full">{children}</div>
