@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export type UserId = {
   cell: string;
   dob: { date: string; age: number };
@@ -47,4 +49,10 @@ export type MockService = {
     title: string;
     path: string;
   };
+};
+
+export type DialogType = {
+  title: string;
+  body: string;
+  content?: ReactNode;
 };

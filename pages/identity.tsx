@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import axios from "axios";
 import useSWR from "swr";
 import ScreenTitle from "../components/ScreenTitle";
@@ -8,6 +8,8 @@ import { UserId } from "../utils/types";
 import VerifiedBadge from "../components/icons/VerifiedBadge";
 import IdInfoItem from "../components/IdInfoItem";
 import MockDoc from "../components/MockDoc";
+import DialogModal from "../components/DialogModal";
+import { DIALOGS } from "../utils/dialogs";
 
 const RANDOMUSER_URI = "https://randomuser.me/api/";
 
@@ -38,6 +40,16 @@ const Identity = () => {
 
   const [verified] = useState(false);
 
+  // Modal Management
+  const [open, setOpen] = useState(true);
+  const cancelButtonRef = useRef(null);
+  function closeModal() {
+    setOpen(false);
+  }
+  function openModal() {
+    setOpen(true);
+  }
+
   return (
     <SidebarWrapper>
       <ScreenTitle
@@ -47,12 +59,27 @@ const Identity = () => {
       {error ? errorContent() : null}
       {!data ? loadingContent() : null}
       {data ? (
-        <div>
+        <div
+          className={`relative inset-0 ${
+            open ? "opacity-50 filter blur-sm" : null
+          }`}
+        >
+          <DialogModal
+            open={open}
+            cancelButtonRef={cancelButtonRef}
+            closeModal={closeModal}
+            title={DIALOGS["demoDisclaimer"].title}
+            body={DIALOGS["demoDisclaimer"].body}
+          />
           <div className="flex items-center xl:items-start flex-col xl:flex-row">
             <div className="board w-full mb-8 xl:mb-0 xl:w-3/5 relative">
               <div>
                 <div className="flex items-center">
-                <img src={user.picture.thumbnail} alt="Profile picture" className="rounded-full" />
+                  <img
+                    src={user.picture.thumbnail}
+                    alt="Profile picture"
+                    className="rounded-full"
+                  />
                   <p className="text-3xl ml-4">{`${user.name.first} ${user.name.last}`}</p>
                   <div className="px-2 py-0.5 rounded-3xl bg-brand text-xs text-white ml-4 self-end">
                     individual

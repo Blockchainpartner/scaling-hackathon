@@ -28,7 +28,6 @@ const TorusLogout: FC = () => {
           redirectUrl: "http://localhost:3000/identity",
         });
         setOpenLogin(openlogin);
-        await openlogin.init();
         setPrivKey(openlogin.privKey);
       } finally {
         setLoading(false);
