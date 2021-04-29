@@ -81,7 +81,7 @@ const Identity = () => {
                     className="rounded-full"
                   />
                   <p className="text-3xl ml-4">{`${user.name.first} ${user.name.last}`}</p>
-                  <div className="px-2 py-0.5 rounded-3xl bg-brand text-xs text-white ml-4 self-end">
+                  <div className="px-2 py-0.5 rounded-3xl bg-brand text-xs text-white ml-4">
                     individual
                   </div>
                 </div>
