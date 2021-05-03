@@ -1,4 +1,4 @@
-import React, { FC, Fragment, MutableRefObject } from "react";
+import React, { FC, Fragment, MutableRefObject, ReactNode } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
 type Props = {
@@ -7,6 +7,7 @@ type Props = {
   closeModal: () => void;
   title: string;
   body: string;
+  content?: ReactNode;
 };
 
 const DialogModal: FC<Props> = ({
@@ -15,6 +16,7 @@ const DialogModal: FC<Props> = ({
   closeModal,
   title,
   body,
+  content,
 }) => {
   return (
     <Transition show={open} as={Fragment}>
@@ -62,7 +64,10 @@ const DialogModal: FC<Props> = ({
                 {title}
               </Dialog.Title>
               <div className="mt-2">
-                <p className="text-sm text-gray-500 whitespace-pre-wrap	">{body}</p>
+                <div className="my-4">{content || null}</div>
+                <p className="text-sm text-gray-500 whitespace-pre-wrap	">
+                  {body}
+                </p>
               </div>
 
               <div className="mt-4">

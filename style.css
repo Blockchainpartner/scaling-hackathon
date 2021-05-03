@@ -17,7 +17,7 @@
   }
 
   .btn-primary {
-    @apply py-3 px-4 bg-brand text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75;
+    @apply py-3 px-4 bg-brand text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75 disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
   .sidebtn {
@@ -58,5 +58,21 @@
   .circle span {
     display: inline-block;
     vertical-align: middle;
+  }
+
+  .donutSpinner {
+    display: inline-block;
+    border: 4px solid hsl(222 100% 95%);
+    border-left-color: hsl(243 80% 62%);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: donut-spin 1.2s linear infinite;
+  }
+
+  @keyframes donut-spin {
+    to {
+      transform: rotate(1turn);
+    }
   }
 }

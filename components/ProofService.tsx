@@ -21,7 +21,7 @@ const ProofService: FC<{ service: MockService }> = ({ service }) => {
 
       <div className="flex w-full justify-end">
         <button
-          className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+          className="btn-primary"
           disabled={!service.cta}
           onClick={() =>
             service.cta
