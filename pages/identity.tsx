@@ -1,6 +1,9 @@
 import React, { useRef, useState } from "react";
 import axios from "axios";
 import useSWR from "swr";
+import Web3 from "web3";
+import BN from 'bn.js';
+import { useToasts } from 'react-toast-notifications';
 import ScreenTitle from "../components/ScreenTitle";
 import SidebarWrapper from "../components/SidebarWrapper";
 import FireIcon from "../components/icons/HelpIcon";
@@ -11,9 +14,8 @@ import MockDoc from "../components/MockDoc";
 import DialogModal from "../components/DialogModal";
 import { DIALOGS } from "../utils/dialogs";
 import useAccount from "../contexts/account";
-import Web3 from "web3";
-import {pedersen} from '../utils/pedersen';
-import BN from 'bn.js';
+import { pedersen } from '../utils/pedersen';
+
 
 const RANDOMUSER_URI = "https://randomuser.me/api/";
 
@@ -53,7 +55,8 @@ function	modCairoPrime(str: string) {
 }
 
 const Identity = () => {
-  const accountCtx = useAccount() as AccountCtx
+  const accountCtx = useAccount() as AccountCtx;
+  const { addToast, removeAllToasts } = useToasts();
   const { data, error } = useSWR("/api/user", userFetcher, revalOptions);
   const user = data?.results[0] as UserId;
 
@@ -86,6 +89,7 @@ const Identity = () => {
         cell: user.cell,
         email: user.email,
         gender: user.gender,
+        disabled: true,
         dob: {
           date: user.dob.date,
           age: user.dob.age
@@ -104,7 +108,7 @@ const Identity = () => {
     } as BackendUserID
 
     const res = await axios.post(`http://localhost:8080/user/add`, {
-      newUser,
+      ...newUser,
       registries: [
         {key: registries[0], secret: registry0},
         {key: registries[1], secret: registry1},
@@ -112,7 +116,22 @@ const Identity = () => {
       ]
     });
     if (res.status === 200) {
+      addToast('New identity added. Validation needed', {appearance: 'success'});
       accountCtx.set_user(newUser)
+    } else {
+      addToast('Impossible to process your identity', {appearance: 'error'});
+    }
+  }
+
+  async function validateUser() {
+    addToast('Please wait for the validation (~1-2mn)', {appearance: 'info', autoDismiss: false});
+    const res = await axios.post(`http://localhost:8080/user/validate/${accountCtx.user.UUID}`);
+    if (res.status === 200) {
+      removeAllToasts();
+      addToast('Your identity is now validated !', {appearance: 'success'});
+    } else {
+      removeAllToasts();
+      addToast('Impossible to process your identity', {appearance: 'error'});
     }
   }
 
@@ -195,8 +214,16 @@ const Identity = () => {
               <button
                 onClick={addUser}
                 className="btn-primary mt-8 py-6 w-full">
-                VERIFY & SAVE IDENTITY
+                {'VERIFY & SAVE IDENTITY'}
               </button>
+
+              <button
+                onClick={() => accountCtx.user == undefined ? null : validateUser()}
+                disabled={accountCtx.user == undefined}
+                className={`mt-2 py-2 w-full text-sm font-sans rounded-md ${accountCtx.user == undefined ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-gray-200 hover:bg-success text-gray-700 hover:text-white'}`}>
+                {'CONFIRM IDENTITY'}
+              </button>
+
             </div>
           </div>
         </div>

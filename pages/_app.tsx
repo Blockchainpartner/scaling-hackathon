@@ -3,8 +3,30 @@ import { AppProps } from "next/app";
 import "../style.css";
 import Head from "next/head";
 import { AccountApp } from "../contexts/account";
+import { ToastProvider, useToasts } from 'react-toast-notifications';
+import Pusher from 'pusher-js';
 
-export default function App({ Component, pageProps }: AppProps) {
+function  WrapperApp({ Component, pageProps }: AppProps) {
+  const { addToast } = useToasts();
+
+  React.useEffect(() => {
+    const pusher = new Pusher(`391a3ce97ac53af64f6c`, {
+      cluster: `eu`,
+      authEndpoint: 'http://localhost:8080/pusher'
+    });
+  
+    var channel = pusher.subscribe('private-identity');
+    channel.bind('processIdentity', function({registry, step, type}) {
+      console.log(`${registry}: ${step}`)
+      addToast(step, {appearance: type || 'info'});
+    });
+  }, [])
+
+
+  return <Component {...pageProps} />
+}
+
+export default function App(props: any) {
   return (
     <>
       <Head>
@@ -17,9 +39,11 @@ export default function App({ Component, pageProps }: AppProps) {
           rel="stylesheet"
         />
       </Head>
-      <AccountApp>
-        <Component {...pageProps} />
-      </AccountApp>
+      <ToastProvider autoDismiss>
+        <AccountApp>
+          <WrapperApp {...props} />
+        </AccountApp>
+      </ToastProvider>
     </>
   );
 }

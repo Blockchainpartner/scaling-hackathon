@@ -52,6 +52,7 @@ export type BackendUserID = {
     cell: string;
     email: string;
     gender: string;
+    disabled: boolean;
     dob: { date: string; age: number };
     location: {
       city: string;

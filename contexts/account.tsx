@@ -35,8 +35,5 @@ export const AccountApp = (props: any) => {
 	)
 }
 
-// const AxiosContext = React.createContext<ContextValue>(undefined);
-
-
 export const useAccount = () => useContext(Account)
 export default useAccount;
