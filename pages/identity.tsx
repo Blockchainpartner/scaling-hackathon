@@ -4,7 +4,7 @@ import useSWR from "swr";
 import ScreenTitle from "../components/ScreenTitle";
 import SidebarWrapper from "../components/SidebarWrapper";
 import FireIcon from "../components/icons/HelpIcon";
-import { AccountCtx, UserId } from "../utils/types";
+import { AccountCtx, BackendUserID, UserId } from "../utils/types";
 import VerifiedBadge from "../components/icons/VerifiedBadge";
 import IdInfoItem from "../components/IdInfoItem";
 import MockDoc from "../components/MockDoc";
@@ -75,8 +75,7 @@ const Identity = () => {
     const registry0 = await hashData(registries[0], accountCtx?.account?.address, modCairoPrime(accountCtx?.account?.privateKey))
     const registry1 = await hashData(registries[1], accountCtx?.account?.address, modCairoPrime(accountCtx?.account?.privateKey))
     const registry2 = await hashData(registries[2], accountCtx?.account?.address, modCairoPrime(accountCtx?.account?.privateKey))
-
-    const res = await axios.post(`http://localhost:8080/user/add`, {
+    const newUser = {
       UUID: user.login.uuid,
       password: user.login.sha256,
       isVerified: false,
@@ -101,15 +100,20 @@ const Identity = () => {
             number: user.location.street.number            
           }
         }
-      },
+      }
+    } as BackendUserID
+
+    const res = await axios.post(`http://localhost:8080/user/add`, {
+      newUser,
       registries: [
         {key: registries[0], secret: registry0},
         {key: registries[1], secret: registry1},
         {key: registries[2], secret: registry2}
       ]
     });
-
-    console.log(res)
+    if (res.status === 200) {
+      accountCtx.set_user(newUser)
+    }
   }
 
   return (

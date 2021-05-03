@@ -6,15 +6,15 @@
 ******************************************************************************/
 
 import	{useState, useContext, createContext, useEffect}	from	'react';
-import { AccountCtx } from '../utils/types';
+import { AccountCtx, BackendUserID } from '../utils/types';
 import	{ethers} from 'ethers';
 import OpenLogin from '@toruslabs/openlogin';
-
 
 const	Account = createContext(undefined as any);
 export const AccountApp = (props: any) => {
 	const	[account, set_account] = useState<ethers.Wallet>();
 	const	[openLogin, set_openLogin] = useState<OpenLogin>();
+	const	[user, set_user] = useState<BackendUserID>();
 
 	useEffect(() => {
 		console.dir(openLogin)
@@ -29,6 +29,7 @@ export const AccountApp = (props: any) => {
 			children={props.children}
 			value={{
 				account,
+				user, set_user,
 				openLogin, set_openLogin
 			} as AccountCtx} />
 	)

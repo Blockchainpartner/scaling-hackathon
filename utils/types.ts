@@ -41,6 +41,29 @@ export type UserId = {
   registered: { age: number; date: string };
 };
 
+export type BackendUserID = {
+  UUID: string;
+  password: string;
+  isVerified: boolean;
+  KYC: {
+    name: string;
+    nat: string;
+    phone: string;
+    cell: string;
+    email: string;
+    gender: string;
+    dob: { date: string; age: number };
+    location: {
+      city: string;
+      country: string;
+      postcode: string;
+      state: string;
+      street: { number: number; name: string };
+    };
+  }
+};
+
+
 export type MockService = {
   id: number;
   logo: string;
@@ -63,4 +86,6 @@ export type AccountCtx = {
   account: ethers.Wallet;
   openLogin: OpenLogin;
   set_openLogin: (v: any) => void;
+  user: BackendUserID;
+  set_user: (v: BackendUserID) => void;
 };
