@@ -2,6 +2,7 @@ import * as React from "react";
 import { AppProps } from "next/app";
 import "../style.css";
 import Head from "next/head";
+import { AccountApp } from "../contexts/account";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -16,7 +17,9 @@ export default function App({ Component, pageProps }: AppProps) {
           rel="stylesheet"
         />
       </Head>
-      <Component {...pageProps} />
+      <AccountApp>
+        <Component {...pageProps} />
+      </AccountApp>
     </>
   );
 }

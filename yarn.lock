@@ -564,20 +564,20 @@
     deepmerge "^4.2.2"
 
 "@toruslabs/openlogin-jrpc@^0.5.5":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@toruslabs/openlogin-jrpc/-/openlogin-jrpc-0.7.0.tgz#72fee3a94e9488ae133b0595bdf4d272ca01010d"
-  integrity sha512-BO6QnMQoZDp6O/JPVRj216es2m+10JcvtvudNhtfeCBPEXw/uc/OBRBBM0CC002zAHDgivSlPCc+8KOvNRXl1w==
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@toruslabs/openlogin-jrpc/-/openlogin-jrpc-0.8.0.tgz#0931b41789158b33556b3cd5700abbc76fd5eb9e"
+  integrity sha512-bQAbFHSD+ZOhRtUd1hbNYn44vpuoCPp/2QcqklM0fMqhgCLIsuVXtT7BYeI3nNmD6UHC6VFCAZhkbrNpg+nC0A==
   dependencies:
-    "@toruslabs/openlogin-utils" "^0.7.0"
+    "@toruslabs/openlogin-utils" "^0.8.0"
     end-of-stream "^1.4.4"
     fast-safe-stringify "^2.0.7"
     once "^1.4.0"
     pump "^3.0.0"
 
-"@toruslabs/openlogin-utils@^0.5.5", "@toruslabs/openlogin-utils@^0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@toruslabs/openlogin-utils/-/openlogin-utils-0.7.0.tgz#d612aacd0daaaf48734c7512335777569113902b"
-  integrity sha512-6caBBLGKjcDulU6oD0p7obtg0dTQlCLTAkDStkwSK9VObMOA/eR92jn3ivjE+r+epiU0LH7kFLAE8/ZFbtpNCw==
+"@toruslabs/openlogin-utils@^0.5.5", "@toruslabs/openlogin-utils@^0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@toruslabs/openlogin-utils/-/openlogin-utils-0.8.0.tgz#21c9d7847e05176a20f770671e6dfd051b79ff9b"
+  integrity sha512-jQQmnN4iqO6HWT39vDaln1WTvZDQYV8GO0k1RvN6xGOvVzyPeaF9yYpsjQ8zvJvaWt1kZcq1b7qsoKsFpxuY/A==
   dependencies:
     base64url "^3.0.1"
     keccak "^3.0.1"

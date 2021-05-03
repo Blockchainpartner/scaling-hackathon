@@ -4,12 +4,16 @@ import useSWR from "swr";
 import ScreenTitle from "../components/ScreenTitle";
 import SidebarWrapper from "../components/SidebarWrapper";
 import FireIcon from "../components/icons/HelpIcon";
-import { UserId } from "../utils/types";
+import { AccountCtx, UserId } from "../utils/types";
 import VerifiedBadge from "../components/icons/VerifiedBadge";
 import IdInfoItem from "../components/IdInfoItem";
 import MockDoc from "../components/MockDoc";
 import DialogModal from "../components/DialogModal";
 import { DIALOGS } from "../utils/dialogs";
+import useAccount from "../contexts/account";
+import Web3 from "web3";
+import {pedersen} from '../utils/pedersen';
+import BN from 'bn.js';
 
 const RANDOMUSER_URI = "https://randomuser.me/api/";
 
@@ -34,7 +38,22 @@ const loadingContent = () => (
   </div>
 );
 
+async function hashData(_nullifier: string, _data: string, _secret: string) {
+	const	data = Web3.utils.toBN(Web3.utils.toHex(_data))
+	const	nullifier = Web3.utils.toBN(Web3.utils.toHex(_nullifier))
+	const	secret = Web3.utils.toBN(Web3.utils.toHex(_secret))
+	const	pSecret = Web3.utils.toBN(`0x${pedersen([nullifier, secret])}`)
+	return `0x${pedersen([data, pSecret])}`
+}
+function	modCairoPrime(str: string) {
+	const	prime = new BN('800000000000011000000000000000000000000000000000000000000000001', 16);
+	const	value = new BN(str, 16)
+	const	result = value.mod(prime)
+	return result.toString(10)
+}
+
 const Identity = () => {
+  const accountCtx = useAccount() as AccountCtx
   const { data, error } = useSWR("/api/user", userFetcher, revalOptions);
   const user = data?.results[0] as UserId;
 
@@ -48,6 +67,49 @@ const Identity = () => {
   }
   function openModal() {
     setOpen(true);
+  }
+
+  async function addUser() {
+    const {data: registries} = await axios.get(`http://localhost:8080/registries`)
+
+    const registry0 = await hashData(registries[0], accountCtx?.account?.address, modCairoPrime(accountCtx?.account?.privateKey))
+    const registry1 = await hashData(registries[1], accountCtx?.account?.address, modCairoPrime(accountCtx?.account?.privateKey))
+    const registry2 = await hashData(registries[2], accountCtx?.account?.address, modCairoPrime(accountCtx?.account?.privateKey))
+
+    const res = await axios.post(`http://localhost:8080/user/add`, {
+      UUID: user.login.uuid,
+      password: user.login.sha256,
+      isVerified: false,
+      KYC: {
+        name: user.name.first,
+        nat: user.nat,
+        phone: user.phone,
+        cell: user.cell,
+        email: user.email,
+        gender: user.gender,
+        dob: {
+          date: user.dob.date,
+          age: user.dob.age
+        },
+        location: {
+          city: user.location.city,
+          country: user.location.country,
+          postcode: String(user.location.postcode),
+          state: user.location.state,
+          street: {
+            name: user.location.street.name,            
+            number: user.location.street.number            
+          }
+        }
+      },
+      registries: [
+        {key: registries[0], secret: registry0},
+        {key: registries[1], secret: registry1},
+        {key: registries[2], secret: registry2}
+      ]
+    });
+
+    console.log(res)
   }
 
   return (
@@ -85,7 +147,7 @@ const Identity = () => {
                     individual
                   </div>
                 </div>
-                <code className="text-md">{`0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce`}</code>
+                <code className="text-md">{accountCtx?.account?.address}</code>
 
                 {verified ? (
                   <div className="absolute top-4 right-4">
@@ -126,7 +188,9 @@ const Identity = () => {
                 <MockDoc filename="disabilty_certificate.pdf" size="4.3Mb" />
                 <MockDoc filename="IdCard.png" size="0.4Mb" />
               </div>
-              <button className="btn-primary mt-8 py-6 w-full">
+              <button
+                onClick={addUser}
+                className="btn-primary mt-8 py-6 w-full">
                 VERIFY & SAVE IDENTITY
               </button>
             </div>

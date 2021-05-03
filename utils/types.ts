@@ -1,4 +1,6 @@
-import { ReactNode } from "react";
+import  { ReactNode } from "react";
+import  OpenLogin from "@toruslabs/openlogin";
+import { ethers } from "ethers";
 
 export type UserId = {
   cell: string;
@@ -55,4 +57,10 @@ export type DialogType = {
   title: string;
   body: string;
   content?: ReactNode;
+};
+
+export type AccountCtx = {
+  account: ethers.Wallet;
+  openLogin: OpenLogin;
+  set_openLogin: (v: any) => void;
 };
