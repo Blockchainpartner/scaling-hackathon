@@ -95,7 +95,7 @@ const bbb: FC = () => {
         />
         <div>
           <MockTrainInfo />
-          <TravellerInfo />
+          {/* <TravellerInfo /> */}
           <TravelReductions
             reductions={reductions}
             updateReductions={updateReductions}
