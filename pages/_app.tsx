@@ -16,9 +16,19 @@ function  WrapperApp({ Component, pageProps }: AppProps) {
     });
   
     var channel = pusher.subscribe('private-identity');
-    channel.bind('processIdentity', function({registry, step, type}) {
-      console.log(`${registry}: ${step}`)
-      addToast(step, {appearance: type || 'info'});
+    channel.bind('processIdentity', function(data: any) {
+      const {registry, step, type} = data;
+      console.log(`${registry}: ${step}`);
+
+      if (registry === `161373187550089867448191830760110801114155294027693593477164529548269146668`) {
+        addToast(`12-24 discount: ${step}`, {appearance: type || 'info'});
+      } else if (registry === `418791004851046193537070596848530790547129451305514433175127304050849890764`) {
+        addToast(`60+ discount: ${step}`, {appearance: type || 'info'});
+      } else if (registry === `374546399808851745807054416014379391823657543778127138954064098322040293325`) {
+        addToast(`Disability discount: ${step}`, {appearance: type || 'info'});
+      } else {
+        addToast(step, {appearance: type || 'info'});
+      }
     });
   }, [])
 
