@@ -7,6 +7,8 @@ module.exports = ({
 	env: {
 		ALCHEMY_KEY: process.env.ALCHEMY_KEY,
 		CONTRACT_ADDRESS: process.env.CONTRACT_ADDRESS,
+		TEMP_ADDRESS: process.env.TEMP_ADDRESS,
+		TEMP_PK: process.env.TEMP_PK,
 	},
   	optimization: {
 		minimize: true,

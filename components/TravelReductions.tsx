@@ -13,8 +13,6 @@ const TravelReductions = () => {
 	const accountCtx = useAccount() as AccountCtx;
 	const { addToast } = useToasts();
 
-	console.log(accountCtx.user, accountCtx.account)
-	
 	async function	checkProof(registryKey: string, hash: string, registryHash: string) {
 		const	provider = new ethers.providers.AlchemyProvider('ropsten', process.env.ALCHEMY_KEY)
 		const	ABI = ['function proveIdentity(uint256 registryKey, uint256 hash, uint256 registryHash) public view returns (bool)']
@@ -29,8 +27,8 @@ const TravelReductions = () => {
 	}
 
 	async function claimDiscount(registryKey: string) {
-		const address = `0x5A5dafC570a744844fe0c1AfF9D7397d1791AcCB`;
-		const privateKey = `0x2b673c90d1d1c217c7b999ed7279210f9427f0d7bf76bc52cb3dae3aa0982159`;
+		const address = process.env.TEMP_ADDRESS as string;
+		const privateKey = process.env.TEMP_PK as string;
 		const secret = await hashSecret(registryKey, modCairoPrime(privateKey))
 
 		const res = await axios.post(`http://localhost:8080/proof/prove/${registryKey}`, {address, secret})
