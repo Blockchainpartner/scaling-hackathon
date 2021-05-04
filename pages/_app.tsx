@@ -5,6 +5,7 @@ import Head from "next/head";
 import { AccountApp } from "../contexts/account";
 import { ToastProvider, useToasts } from 'react-toast-notifications';
 import Pusher from 'pusher-js';
+import { REGISTRIES } from "../utils/utils";
 
 function  WrapperApp({ Component, pageProps }: AppProps) {
   const { addToast } = useToasts();
@@ -20,11 +21,11 @@ function  WrapperApp({ Component, pageProps }: AppProps) {
       const {registry, step, type} = data;
       console.log(`${registry}: ${step}`);
 
-      if (registry === `161373187550089867448191830760110801114155294027693593477164529548269146668`) {
+      if (registry === REGISTRIES.YOUNG) {
         addToast(`12-24 discount: ${step}`, {appearance: type || 'info'});
-      } else if (registry === `418791004851046193537070596848530790547129451305514433175127304050849890764`) {
+      } else if (registry === REGISTRIES.OLD) {
         addToast(`60+ discount: ${step}`, {appearance: type || 'info'});
-      } else if (registry === `374546399808851745807054416014379391823657543778127138954064098322040293325`) {
+      } else if (registry === REGISTRIES.DISABILITY) {
         addToast(`Disability discount: ${step}`, {appearance: type || 'info'});
       } else {
         addToast(step, {appearance: type || 'info'});

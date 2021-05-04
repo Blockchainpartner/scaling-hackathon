@@ -1,26 +1,37 @@
-const promisify = (inner: any) =>
-  new Promise((resolve, reject) =>
-    inner((err: any, res: any) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(res);
-      }
-    })
-  );
+import BN from 'bn.js';
+import Web3 from "web3";
+import { pedersen } from './pedersen';
 
-const atFormat = (str: string, n: number) => {
-  return (str.length > n) ? str.substr(0, n+1) + '....' + str.substr(str.length-n+1, str.length) : str;
-};
-
-const	ERC20_JSON = [{"constant": true,"inputs": [{"name": "_owner","type": "address"}],"name": "balanceOf","outputs": [{"name": "balance","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"anonymous": false,"inputs": [{"indexed": true,"internalType": "address","name": "src","type": "address"}, {"indexed": true,"internalType": "address","name": "dst","type": "address"}, {"indexed": false,"internalType": "uint256","name": "wad","type": "uint256"}],"name": "Transfer","type": "event"}];
-async function checkERC20Amount(web3: any, userAddress: string, erc20Address: string) {
-  const	erc20Json = new web3.eth.Contract(ERC20_JSON, erc20Address);
-  const	balanceRightNow = await erc20Json.methods.balanceOf(userAddress).call().then((e: any) => e);
-  return web3.utils.fromWei(balanceRightNow);
+async function hashData(_nullifier: string, _data: string, _secret: string) {
+	const	data = Web3.utils.toBN(Web3.utils.toHex(_data))
+	const	nullifier = Web3.utils.toBN(Web3.utils.toHex(_nullifier))
+	const	secret = Web3.utils.toBN(Web3.utils.toHex(_secret))
+	const	pSecret = Web3.utils.toBN(`0x${pedersen([nullifier, secret])}`)
+	return `0x${pedersen([data, pSecret])}`
+}
+async function hashSecret(_nullifier: string, _secret: string) {
+	const	nullifier = Web3.utils.toBN(Web3.utils.toHex(_nullifier))
+	const	secret = Web3.utils.toBN(Web3.utils.toHex(_secret))
+	const	pSecret = Web3.utils.toBN(`0x${pedersen([nullifier, secret])}`)
+	return pSecret.toString(10)
+}
+function	modCairoPrime(str: string) {
+	const	prime = new BN('800000000000011000000000000000000000000000000000000000000000001', 16);
+	const	value = new BN(str, 16);
+	const	result = value.mod(prime);
+	return result.toString(10);
+}
+function	addCairoPrime(str: string) {
+	const	prime = new BN('800000000000011000000000000000000000000000000000000000000000001', 16);
+	const	value = new BN(str, 10);
+	const	result = value.add(prime);
+	return `0x${result.toString(16)}`;
 }
 
-const wbtcAdd = '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599';
-const usdcAdd = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48';
+const	REGISTRIES = {
+	DISABILITY: `374546399808851745807054416014379391823657543778127138954064098322040293325`,
+	YOUNG: `161373187550089867448191830760110801114155294027693593477164529548269146668`,
+	OLD: `418791004851046193537070596848530790547129451305514433175127304050849890764`,
+}
 
-export {promisify, atFormat, checkERC20Amount, wbtcAdd, usdcAdd}
+export {hashData, hashSecret, modCairoPrime, addCairoPrime, REGISTRIES}

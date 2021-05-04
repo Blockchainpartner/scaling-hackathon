@@ -1,8 +1,6 @@
 import React, { useRef, useState } from "react";
 import axios from "axios";
 import useSWR from "swr";
-import Web3 from "web3";
-import BN from 'bn.js';
 import { useToasts } from 'react-toast-notifications';
 import ScreenTitle from "../components/ScreenTitle";
 import SidebarWrapper from "../components/SidebarWrapper";
@@ -14,17 +12,11 @@ import MockDoc from "../components/MockDoc";
 import DialogModal from "../components/DialogModal";
 import { DIALOGS } from "../utils/dialogs";
 import useAccount from "../contexts/account";
-import { pedersen } from '../utils/pedersen';
-
+import { hashData, modCairoPrime } from '../utils/utils';
 
 const RANDOMUSER_URI = "https://randomuser.me/api/";
-
 const userFetcher = () => axios.get(RANDOMUSER_URI).then((res) => res.data);
-
-const revalOptions = {
-  revalidateOnFocus: false,
-  revalidateOnReconnect: false,
-};
+const revalOptions = { revalidateOnFocus: false, revalidateOnReconnect: false };
 
 const errorContent = () => (
   <div className="m-auto w-full">
@@ -40,31 +32,15 @@ const loadingContent = () => (
   </div>
 );
 
-async function hashData(_nullifier: string, _data: string, _secret: string) {
-	const	data = Web3.utils.toBN(Web3.utils.toHex(_data))
-	const	nullifier = Web3.utils.toBN(Web3.utils.toHex(_nullifier))
-	const	secret = Web3.utils.toBN(Web3.utils.toHex(_secret))
-	const	pSecret = Web3.utils.toBN(`0x${pedersen([nullifier, secret])}`)
-	return `0x${pedersen([data, pSecret])}`
-}
-function	modCairoPrime(str: string) {
-	const	prime = new BN('800000000000011000000000000000000000000000000000000000000000001', 16);
-	const	value = new BN(str, 16)
-	const	result = value.mod(prime)
-	return result.toString(10)
-}
-
 const Identity = () => {
   const accountCtx = useAccount() as AccountCtx;
   const { addToast, removeAllToasts } = useToasts();
   const { data, error } = useSWR("/api/user", userFetcher, revalOptions);
   const user = data?.results[0] as UserId;
-
   const [verified] = useState(false);
-
-  // Modal Management
   const [open, setOpen] = useState(true);
   const cancelButtonRef = useRef(null);
+  
   function closeModal() {
     setOpen(false);
   }

@@ -6,7 +6,7 @@ import SidebarWrapper from "../../../../components/SidebarWrapper";
 import TravellerInfo from "../../../../components/TravellerInfo";
 import TravelReductions from "../../../../components/TravelReductions";
 
-const bbb: FC = () => {
+const Book: FC = () => {
   return (
     <SidebarWrapper>
       <ScreenTitle
@@ -33,4 +33,4 @@ const bbb: FC = () => {
   );
 };
 
-export default bbb;
+export default Book;
