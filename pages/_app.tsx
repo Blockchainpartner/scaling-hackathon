@@ -16,11 +16,26 @@ function  WrapperApp({ Component, pageProps }: AppProps) {
       authEndpoint: 'http://localhost:8080/pusher'
     });
   
-    var channel = pusher.subscribe('private-identity');
-    channel.bind('processIdentity', function(data: any) {
+    const channelIdentity = pusher.subscribe('private-identity');
+    channelIdentity.bind('processIdentity', function(data: any) {
       const {registry, step, type} = data;
       console.log(`${registry}: ${step}`);
 
+      if (registry === REGISTRIES.YOUNG) {
+        addToast(`12-24 discount: ${step}`, {appearance: type || 'info'});
+      } else if (registry === REGISTRIES.OLD) {
+        addToast(`60+ discount: ${step}`, {appearance: type || 'info'});
+      } else if (registry === REGISTRIES.DISABILITY) {
+        addToast(`Disability discount: ${step}`, {appearance: type || 'info'});
+      } else {
+        addToast(step, {appearance: type || 'info'});
+      }
+    });
+
+    const channelClaims = pusher.subscribe('private-claims');
+    channelClaims.bind('processClaim', function(data: any) {
+      const {registry, step, type} = data;
+      console.log(`${registry}: ${step}`);
       if (registry === REGISTRIES.YOUNG) {
         addToast(`12-24 discount: ${step}`, {appearance: type || 'info'});
       } else if (registry === REGISTRIES.OLD) {

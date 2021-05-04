@@ -19,30 +19,34 @@ const TravelReductions = () => {
 		const	smartContract = new ethers.Contract(process.env.CONTRACT_ADDRESS as string, ABI, provider)
 		const	identityIsProved = await smartContract.proveIdentity(registryKey,hash, registryHash);
 		if (identityIsProved) {
-			addToast('YEAY !', {appearance: 'success'});
+			addToast('The proof is valid', {appearance: 'success'});
 		} else {
-			addToast('NOP', {appearance: 'error'});
+			addToast('The proof is not valid', {appearance: 'error'});
 		}
 		return identityIsProved;
 	}
 
 	async function claimDiscount(registryKey: string) {
-		const address = process.env.TEMP_ADDRESS as string;
-		const privateKey = process.env.TEMP_PK as string;
-		const secret = await hashSecret(registryKey, modCairoPrime(privateKey))
+		const address = accountCtx.account.address;
+		const privateKey = accountCtx.account.privateKey;
+		const secret = await hashSecret(registryKey, modCairoPrime(privateKey));
 
-		const res = await axios.post(`http://localhost:8080/proof/prove/${registryKey}`, {address, secret})
-		if (res.status === 200) {
-			addToast('proof submited', {appearance: 'success'});
-			let   proof = res.data.proof;
-			let   registryHash = res.data.hash;
-
-			if (proof[0] === '-')
-				proof = addCairoPrime(proof);
-			if (registryHash[0] === '-')
-				registryHash = addCairoPrime(registryHash);
-			checkProof(registryKey, proof, registryHash);
-		} else {
+		try {
+			const res = await axios.post(`http://localhost:8080/proof/prove/${registryKey}`, {address, secret})
+			if (res.status === 200) {
+				addToast('proof submited', {appearance: 'success'});
+				let   proof = res.data.proof;
+				let   registryHash = res.data.hash;
+	
+				if (proof[0] === '-')
+					proof = addCairoPrime(proof);
+				if (registryHash[0] === '-')
+					registryHash = addCairoPrime(registryHash);
+				checkProof(registryKey, proof, registryHash);
+			} else {
+				addToast('Impossible prove this claim', {appearance: 'error'});
+			}	
+		} catch (error) {
 			addToast('Impossible prove this claim', {appearance: 'error'});
 		}
 	}
