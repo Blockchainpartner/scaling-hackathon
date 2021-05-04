@@ -8,10 +8,17 @@ export const DIALOGS: { [key: string]: DialogType } = {
   },
   proofGenLoading: {
     title: "Generating and verifying the proof",
-    body: "A proof of your identity feature is being generated and verified without exposing any of your personal info to the vendor."
+    body:
+      "A proof of your identity feature is being generated and verified without exposing any of your personal info to the vendor.",
   },
   proofGenDone: {
     title: "Proof is ready",
-    body: "The proof has been generated successfully. You can now pay your booking."
-  }
+    body:
+      "The proof has been generated successfully. You can now pay your booking.",
+  },
+  paymentSuccess: {
+    title: "Payment succeeded",
+    body:
+      "This part is olso mocked. On a real scale app, the vendor will be able to deliver your order with the right reduction, without knowing your ID info.",
+  },
 };

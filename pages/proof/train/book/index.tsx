@@ -1,15 +1,17 @@
 import React, { ChangeEvent, FC, useEffect, useRef, useState } from "react";
+import { useRouter } from "next/dist/client/router";
 import DialogModal from "../../../../components/DialogModal";
 import CheckIcon from "../../../../components/icons/CheckIcon";
 import InfoIcon from "../../../../components/icons/InfoIcon";
 import MockTrainInfo from "../../../../components/MockTrainInfo";
 import ScreenTitle from "../../../../components/ScreenTitle";
 import SidebarWrapper from "../../../../components/SidebarWrapper";
-import TravellerInfo from "../../../../components/TravellerInfo";
 import TravelReductions from "../../../../components/TravelReductions";
 import { DIALOGS } from "../../../../utils/dialogs";
 
-const bbb: FC = () => {
+const BookingScreen: FC = () => {
+  const router = useRouter();
+
   const [price, setPrice] = useState(112);
 
   //TODO: Integrate proof
@@ -55,6 +57,8 @@ const bbb: FC = () => {
       setPrice(112);
     }
   }, [reductions]);
+
+  const book = () => router.push("/proof/train/pay");
 
   const disabledBook =
     (reductions.disability || reductions.young) && proof === undefined;
@@ -112,6 +116,7 @@ const bbb: FC = () => {
           <button
             disabled={disabledBook}
             className="btn-primary w-1/6"
+            onClick={book}
           >{`BOOK - ${price.toFixed(2)}€`}</button>
           {disabledBook ? (
             <p className="text-xs mt-4">Waiting for proof generation...</p>
@@ -122,4 +127,4 @@ const bbb: FC = () => {
   );
 };
 
-export default bbb;
+export default BookingScreen;
