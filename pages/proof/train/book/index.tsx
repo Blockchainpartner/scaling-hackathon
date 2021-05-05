@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/dist/client/router";
 import DialogModal from "../../../../components/DialogModal";
 import CheckIcon from "../../../../components/icons/CheckIcon";
@@ -34,17 +34,10 @@ const BookingScreen: FC = () => {
     if (proofGenerated) setProofGenerated(false);
   };
 
-  const [reductions, setReductions] = useState<{ [key: string]: boolean }>({
+  const [reductions] = useState<{ [key: string]: boolean }>({
     disability: false,
     young: false,
   });
-
-  const updateReductions = (e: ChangeEvent<HTMLInputElement>) => {
-    const tg = e.target;
-    const name = tg.name;
-    const value = tg.checked;
-    setReductions({ ...reductions, [name]: value });
-  };
 
   useEffect(() => {
     if (reductions.disability) {
@@ -100,10 +93,7 @@ const BookingScreen: FC = () => {
         <div>
           <MockTrainInfo />
           {/* <TravellerInfo /> */}
-          <TravelReductions
-            reductions={reductions}
-            updateReductions={updateReductions}
-          />
+          <TravelReductions />
           <div className="flex items-center mt-6">
             <InfoIcon color="black" />
             <p className="text-sm ml-2">
