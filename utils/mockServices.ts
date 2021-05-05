@@ -25,7 +25,7 @@ export const mockServices: MockService[] = [
     id: 3,
     logo: "logoFC.png",
     title: "18+ year old proof",
-    issuer: "France Conntect",
+    issuer: "France Connect",
     description:
       "You can demonstrate you are eligible to access age restricted services, by proving you are more than eighteen years old.",
   },

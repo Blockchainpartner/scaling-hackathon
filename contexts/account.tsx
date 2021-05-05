@@ -6,15 +6,16 @@
 ******************************************************************************/
 
 import	{useState, useContext, createContext, useEffect}	from	'react';
-import { AccountCtx, BackendUserID } from '../utils/types';
+import { AccountCtx } from '../utils/types';
 import	{ethers} from 'ethers';
 import OpenLogin from '@toruslabs/openlogin';
+import useLocalStorage from '../utils/useLocalStorage';
 
 const	Account = createContext(undefined as any);
 export const AccountApp = (props: any) => {
 	const	[account, set_account] = useState<ethers.Wallet>();
 	const	[openLogin, set_openLogin] = useState<OpenLogin>();
-	const	[user, set_user] = useState<BackendUserID>();
+	const	[user, set_user] = useLocalStorage(`user`, undefined);
 
 	useEffect(() => {
 		console.dir(openLogin)
@@ -34,9 +35,6 @@ export const AccountApp = (props: any) => {
 			} as AccountCtx} />
 	)
 }
-
-// const AxiosContext = React.createContext<ContextValue>(undefined);
-
 
 export const useAccount = () => useContext(Account)
 export default useAccount;

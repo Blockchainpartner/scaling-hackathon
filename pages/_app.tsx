@@ -3,8 +3,56 @@ import { AppProps } from "next/app";
 import "../style.css";
 import Head from "next/head";
 import { AccountApp } from "../contexts/account";
+import { ToastProvider, useToasts } from 'react-toast-notifications';
+import Pusher from 'pusher-js';
+import { REGISTRIES } from "../utils/utils";
 
-export default function App({ Component, pageProps }: AppProps) {
+function  WrapperApp({ Component, pageProps }: AppProps) {
+  const { addToast } = useToasts();
+
+  React.useEffect(() => {
+    const pusher = new Pusher(`391a3ce97ac53af64f6c`, {
+      cluster: `eu`,
+      authEndpoint: 'http://localhost:8080/pusher'
+    });
+  
+    const channelIdentity = pusher.subscribe('private-identity');
+    channelIdentity.bind('processIdentity', function(data: any) {
+      const {registry, step, type} = data;
+      console.log(`${registry}: ${step}`);
+
+      if (registry === REGISTRIES.YOUNG) {
+        addToast(`12-24 discount: ${step}`, {appearance: type || 'info'});
+      } else if (registry === REGISTRIES.OLD) {
+        addToast(`60+ discount: ${step}`, {appearance: type || 'info'});
+      } else if (registry === REGISTRIES.DISABILITY) {
+        addToast(`Disability discount: ${step}`, {appearance: type || 'info'});
+      } else {
+        addToast(step, {appearance: type || 'info'});
+      }
+    });
+
+    const channelClaims = pusher.subscribe('private-claims');
+    channelClaims.bind('processClaim', function(data: any) {
+      const {registry, step, type} = data;
+      console.log(`${registry}: ${step}`);
+      if (registry === REGISTRIES.YOUNG) {
+        addToast(`12-24 discount: ${step}`, {appearance: type || 'info'});
+      } else if (registry === REGISTRIES.OLD) {
+        addToast(`60+ discount: ${step}`, {appearance: type || 'info'});
+      } else if (registry === REGISTRIES.DISABILITY) {
+        addToast(`Disability discount: ${step}`, {appearance: type || 'info'});
+      } else {
+        addToast(step, {appearance: type || 'info'});
+      }
+    });
+  }, [])
+
+
+  return <Component {...pageProps} />
+}
+
+export default function App(props: any) {
   return (
     <>
       <Head>
@@ -17,9 +65,11 @@ export default function App({ Component, pageProps }: AppProps) {
           rel="stylesheet"
         />
       </Head>
-      <AccountApp>
-        <Component {...pageProps} />
-      </AccountApp>
+      <ToastProvider autoDismiss>
+        <AccountApp>
+          <WrapperApp {...props} />
+        </AccountApp>
+      </ToastProvider>
     </>
   );
 }
