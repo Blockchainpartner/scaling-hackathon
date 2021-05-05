@@ -15,7 +15,7 @@ const BookingScreen: FC = () => {
   const [price, setPrice] = useState(112);
 
   //TODO: Integrate proof
-  const [proof] = useState(true);
+  const [proof, setProof] = useState(false);
   const [generatingProof, setGeneratingProof] = useState(false);
   const [proofGenerated, setProofGenerated] = useState(false);
 
@@ -56,6 +56,8 @@ const BookingScreen: FC = () => {
   const disabledBook =
     (reductions.disability || reductions.young) && proof === undefined;
 
+    console.log("PROOF", proof)
+
   return (
     <SidebarWrapper>
       <div
@@ -93,7 +95,7 @@ const BookingScreen: FC = () => {
         <div>
           <MockTrainInfo />
           {/* <TravellerInfo /> */}
-          <TravelReductions />
+          <TravelReductions setProof={setProof} />
           <div className="flex items-center mt-6">
             <InfoIcon color="black" />
             <p className="text-sm ml-2">

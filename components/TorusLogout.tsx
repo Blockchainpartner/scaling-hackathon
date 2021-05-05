@@ -1,8 +1,9 @@
 import React, { FC, useState } from "react";
-import OpenLogin from "@toruslabs/openlogin";
-import useClientEffect from "../utils/useClientEffect";
 import { useRouter } from "next/dist/client/router";
 import QuitIcon from "./icons/QuitIcon";
+import useAccount from "../contexts/account";
+import { AccountCtx } from "../utils/types";
+import { useToasts } from "react-toast-notifications";
 
 const VERIFIER = {
   loginProvider: "google",
@@ -12,38 +13,17 @@ const VERIFIER = {
 
 const TorusLogout: FC = () => {
   const router = useRouter();
-
-  const [isLoading, setLoading] = useState(true);
-  const [openlogin, setOpenLogin] = useState<undefined | OpenLogin>();
-  const [privKey, setPrivKey] = useState<undefined | string>();
-
-  useClientEffect(() => {
-    (async function () {
-      try {
-        //OpenLogin
-        const openlogin = new OpenLogin({
-          clientId: VERIFIER.clientId,
-          iframeUrl: "http://beta.openlogin.com",
-          network: "testnet",
-          redirectUrl: "http://localhost:3000/identity",
-        });
-        setOpenLogin(openlogin);
-        setPrivKey(openlogin.privKey);
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, []);
+  const accountCtx = useAccount() as AccountCtx;
+  const { addToast } = useToasts();
 
   const onLogout = async () => {
-    if (isLoading || !privKey) return;
-    setLoading(true);
     try {
-      await openlogin?.logout();
-      setPrivKey(undefined);
+      await accountCtx.openLogin?.logout();
       router.push("/");
-    } finally {
-      setLoading(false);
+    } catch (_e) {
+      addToast("Something went wrong while logging out", {
+        appearance: "error",
+      });
     }
   };
 
