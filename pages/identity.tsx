@@ -162,12 +162,6 @@ function  NewUserProfile() {
 						className="btn-primary mt-8 py-6 w-full">
 						{'SAVE IDENTITY'}
 					</button>
-					<button
-						disabled
-						className={`mt-2 py-2 w-full text-sm font-sans rounded-md bg-gray-200 text-gray-400 cursor-not-allowed`}>
-						{'CONFIRM IDENTITY'}
-					</button>
-
 				</div>
 			</div>
 		</div>
@@ -246,26 +240,21 @@ function  ExistingUserProfil() {
 						<MockDoc filename="disabilty_certificate.pdf" size="4.3Mb" />
 						<MockDoc filename="IdCard.png" size="0.4Mb" />
 					</div>
-					<button
-						disabled
-						// className={`mt-2 py-2 w-full text-sm font-sans rounded-md`}>
-						className={'btn-primary mt-8 py-6 w-full bg-gray-200 text-gray-400 cursor-not-allowed hover:bg-gray-200'}>
-						{'SAVE IDENTITY'}
-					</button>
 
-					<button
-						onClick={() => user.isVerified ? null: validateUser()}
-						disabled={user.isVerified}
-						className={user.isVerified ? `mt-2 py-2 w-full text-sm font-sans rounded-md bg-gray-200 text-gray-400 cursor-not-allowed shadow-lg` : 'mt-2 py-2 w-full text-sm font-sans rounded-md bg-brand hover:bg-success text-white shadow-lg'}>
-						{'CONFIRM IDENTITY'}
-					</button>
-
-					<Link href={'/proof'}>
+					{user.isVerified ? 
+						<Link href={'/proof'}>
+							<button
+								className={'btn-primary mt-8 py-6 w-full'}>
+								{'ACCESS SHOP'}
+							</button>
+						</Link>
+					:
 						<button
-							className={`mt-4 py-2 w-full text-xl font-sans rounded-md bg-brand hover:bg-success text-white`}>
-							{'ACCESS SHOP'}
+							onClick={validateUser}
+							className={'btn-primary mt-8 py-6 w-full'}>
+							{'CONFIRM IDENTITY'}
 						</button>
-					</Link>
+					}
 
 				</div>
 			</div>
