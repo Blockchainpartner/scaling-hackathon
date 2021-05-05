@@ -9,7 +9,7 @@ import	{useState, useContext, createContext, useEffect}	from	'react';
 import { AccountCtx } from '../utils/types';
 import	{ethers} from 'ethers';
 import OpenLogin from '@toruslabs/openlogin';
-import useLocalStorage from '../utils/useSessionStorage';
+import useLocalStorage from '../utils/useLocalStorage';
 
 const	Account = createContext(undefined as any);
 export const AccountApp = (props: any) => {

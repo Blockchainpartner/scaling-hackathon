@@ -54,6 +54,7 @@ export type BackendUserID = {
     gender: string;
     disabled: boolean;
     dob: { date: string; age: number };
+    picture: string;
     location: {
       city: string;
       country: string;
