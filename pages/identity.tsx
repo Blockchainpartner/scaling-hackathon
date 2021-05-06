@@ -239,6 +239,7 @@ function  ExistingUserProfil() {
 								info={`${user.KYC.location.city}, ${user.KYC.location.state}`}
 							/>
 							<IdInfoItem label="Country" info={user.KYC.location.country} />
+							<IdInfoItem label="Disabled" info={user.KYC.disabled ? "Yes" : "No"} />
 						</div>
 					</div>
 				</div>
