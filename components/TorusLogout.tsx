@@ -1,15 +1,9 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { useRouter } from "next/dist/client/router";
 import QuitIcon from "./icons/QuitIcon";
 import useAccount from "../contexts/account";
 import { AccountCtx } from "../utils/types";
 import { useToasts } from "react-toast-notifications";
-
-const VERIFIER = {
-  loginProvider: "google",
-  clientId:
-    "BKQWaPaXrysRPuTPHC_3_x5rCeR5-e0C4nQbXFRYF_plX72Du3a03DJNhw0btY5lI6L6lruPjE7p42JxwaBVU0M",
-};
 
 const TorusLogout: FC = () => {
   const router = useRouter();

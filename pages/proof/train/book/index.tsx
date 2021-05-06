@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { ChangeEvent, FC, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/dist/client/router";
 import DialogModal from "../../../../components/DialogModal";
 import CheckIcon from "../../../../components/icons/CheckIcon";
@@ -8,6 +8,7 @@ import ScreenTitle from "../../../../components/ScreenTitle";
 import SidebarWrapper from "../../../../components/SidebarWrapper";
 import TravelReductions from "../../../../components/TravelReductions";
 import { DIALOGS } from "../../../../utils/dialogs";
+import { REGISTRIES } from "../../../../utils/utils";
 
 const BookingScreen: FC = () => {
   const router = useRouter();
@@ -15,7 +16,7 @@ const BookingScreen: FC = () => {
   const [price, setPrice] = useState(112);
 
   //TODO: Integrate proof
-  const [proof, setProof] = useState(false);
+  const [proof, setProof] = useState(true);
   const [generatingProof, setGeneratingProof] = useState(false);
   const [proofGenerated, setProofGenerated] = useState(false);
 
@@ -34,16 +35,24 @@ const BookingScreen: FC = () => {
     if (proofGenerated) setProofGenerated(false);
   };
 
-  const [reductions] = useState<{ [key: string]: boolean }>({
+  const [reductions, setReductions] = useState<{ [key: string]: boolean }>({
     disability: false,
     young: false,
+    senior: false,
   });
 
+  const updateReductions = (e: ChangeEvent<HTMLInputElement>) => {
+    const tg = e.target;
+    const name = tg.name;
+    const value = tg.checked;
+    setReductions({ ...reductions, [name]: value });
+  };
+
   useEffect(() => {
-    if (reductions.disability) {
+    if (reductions[REGISTRIES.DISABILITY]) {
       setPrice(88);
       generateProof();
-    } else if (reductions.young) {
+    } else if (reductions[REGISTRIES.YOUNG] || reductions[REGISTRIES.OLD]) {
       setPrice(97);
       generateProof();
     } else {
@@ -55,8 +64,6 @@ const BookingScreen: FC = () => {
 
   const disabledBook =
     (reductions.disability || reductions.young) && proof === undefined;
-
-    console.log("PROOF", proof)
 
   return (
     <SidebarWrapper>
@@ -95,7 +102,11 @@ const BookingScreen: FC = () => {
         <div>
           <MockTrainInfo />
           {/* <TravellerInfo /> */}
-          <TravelReductions setProof={setProof} />
+          <TravelReductions
+            setProof={setProof}
+            reductions={reductions}
+            setReductions={setReductions}
+          />
           <div className="flex items-center mt-6">
             <InfoIcon color="black" />
             <p className="text-sm ml-2">

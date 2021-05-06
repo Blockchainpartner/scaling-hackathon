@@ -14,7 +14,17 @@ import CouponIcon from "./icons/CouponIcon";
 import YoungIcon from "./icons/SupportIcon";
 import SupportIcon from "./icons/YoungIcon";
 
-const TravelReductions: FC<{ setProof: (v: any) => void }> = ({ setProof }) => {
+type Props = {
+  setProof: (v: any) => void;
+  reductions: { [key: string]: boolean };
+  setReductions: (v: { [key: string]: boolean }) => void;
+};
+
+const TravelReductions: FC<Props> = ({
+  setProof,
+  reductions,
+  setReductions,
+}) => {
   const accountCtx = useAccount() as AccountCtx;
   const { addToast } = useToasts();
 
@@ -66,6 +76,7 @@ const TravelReductions: FC<{ setProof: (v: any) => void }> = ({ setProof }) => {
         if (proof[0] === "-") proof = addCairoPrime(proof);
         if (registryHash[0] === "-") registryHash = addCairoPrime(registryHash);
         setProof(proof);
+        setReductions({ ...reductions, [registryKey]: true });
         checkProof(registryKey, proof, registryHash);
       } else {
         addToast("Impossible prove this claim", { appearance: "error" });
@@ -75,13 +86,17 @@ const TravelReductions: FC<{ setProof: (v: any) => void }> = ({ setProof }) => {
     }
   }
 
+  const reductionClassName = (discount: string) =>
+    "board mt-4 w-1/3 mr-4 hover:shadow transition-all hover:border-brand border-2 hover:cursor-pointer " +
+    `${reductions[discount] ? "border-brand" : ""}`;
+
   return (
     <div className="flex flex-col items-start mt-8">
       <p className="font-semibold text-2xl text-lDark">Price reductions</p>
       <div className="flex flex-col xl:flex-row m-auto xl:m-0 w-full">
         <div
           onClick={() => claimDiscount(REGISTRIES.DISABILITY)}
-          className="board mt-4 w-1/3 mr-4 hover:shadow transition-all hover:border-brand border-2 hover:cursor-pointer"
+          className={reductionClassName(REGISTRIES.DISABILITY)}
         >
           <div className="flex items-center justify-start relative">
             <SupportIcon color="#1F169C" />
@@ -94,7 +109,7 @@ const TravelReductions: FC<{ setProof: (v: any) => void }> = ({ setProof }) => {
 
         <div
           onClick={() => claimDiscount(REGISTRIES.YOUNG)}
-          className="board mt-4 w-1/3 mr-4 hover:shadow transition-all hover:border-brand border-2 hover:cursor-pointer"
+          className={reductionClassName(REGISTRIES.YOUNG)}
         >
           <div className="flex items-center justify-start relative">
             <YoungIcon color="#1F169C" />
@@ -107,7 +122,7 @@ const TravelReductions: FC<{ setProof: (v: any) => void }> = ({ setProof }) => {
 
         <div
           onClick={() => claimDiscount(REGISTRIES.OLD)}
-          className="board mt-4 w-1/3 mr-4 hover:shadow transition-all hover:border-brand border-2 hover:cursor-pointer"
+          className={reductionClassName(REGISTRIES.OLD)}
         >
           <div className="flex items-center justify-start relative">
             <CouponIcon color="#1F169C" />
