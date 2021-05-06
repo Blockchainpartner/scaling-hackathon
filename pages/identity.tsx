@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from 'next/link';
 import axios from "axios";
 import useSWR from "swr";
@@ -15,6 +15,7 @@ import { DIALOGS } from "../utils/dialogs";
 import useAccount from "../contexts/account";
 import { hashData, modCairoPrime } from '../utils/utils';
 import dynamic from "next/dynamic";
+import MathIcon from "../components/icons/MathIcon";
 // import OpenLogin from "@toruslabs/openlogin";
 
 const RANDOMUSER_URI = "https://randomuser.me/api/";
@@ -39,8 +40,8 @@ function  NewUserProfile() {
 	const { addToast } = useToasts();
 	const accountCtx = useAccount() as AccountCtx;
 	const address = accountCtx?.account?.address;
-	const { data, error } = useSWR("/api/user", userFetcher, revalOptions);
-	const user = data?.results[0] as UserId;
+	const { data, error, mutate } = useSWR("/api/user", userFetcher, revalOptions);
+	const user = data?.results[0] as UserId
 	const cancelButtonRef = useRef(null);
 	const [open, setOpen] = useState(true);
 
@@ -162,6 +163,14 @@ function  NewUserProfile() {
 						className="btn-primary mt-8 py-6 w-full">
 						{'SAVE IDENTITY'}
 					</button>
+					{true ? (
+						<div 
+							className="flex items-center mt-4 underline cursor-pointer"
+							onClick={() => mutate()}>
+							<MathIcon color="#1F169C" />
+							<p className="underline sm text-brand ml-2">Generate another random identity</p>
+						</div>)
+					 : null}
 				</div>
 			</div>
 		</div>
