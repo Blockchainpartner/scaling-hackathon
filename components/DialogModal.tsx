@@ -8,6 +8,7 @@ type Props = {
   title: string;
   body: string;
   content?: ReactNode;
+  contentBottom?: boolean;
 };
 
 const DialogModal: FC<Props> = ({
@@ -17,6 +18,7 @@ const DialogModal: FC<Props> = ({
   title,
   body,
   content,
+  contentBottom,
 }) => {
   return (
     <Transition show={open} as={Fragment}>
@@ -64,10 +66,11 @@ const DialogModal: FC<Props> = ({
                 {title}
               </Dialog.Title>
               <div className="mt-2">
-                <div className="my-4">{content || null}</div>
+                {!contentBottom ? <div className="my-4">{content || null}</div> : null}
                 <p className="text-sm text-gray-500 whitespace-pre-wrap	">
                   {body}
                 </p>
+                {contentBottom ? <div className="my-4">{content || null}</div> : null}
               </div>
 
               <div className="mt-4">

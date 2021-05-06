@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import Link from 'next/link';
 import axios from "axios";
 import useSWR from "swr";
@@ -16,6 +16,8 @@ import useAccount from "../contexts/account";
 import { hashData, modCairoPrime } from '../utils/utils';
 import dynamic from "next/dynamic";
 import MathIcon from "../components/icons/MathIcon";
+import DontShowAgain from "../components/DontShowAgain";
+import useLocalStorage from "../utils/useLocalStorage";
 // import OpenLogin from "@toruslabs/openlogin";
 
 const RANDOMUSER_URI = "https://randomuser.me/api/";
@@ -45,6 +47,10 @@ function  NewUserProfile() {
 	const cancelButtonRef = useRef(null);
 	const [open, setOpen] = useState(true);
 
+	const [stopDemoDisclaimer, setStopDemoDisclaimer] = useLocalStorage(
+		`stop_demo_disclaimer`,
+		false
+		);
 
 	async function addUser() {
 		const {data: registries} = await axios.get(`http://localhost:8080/registries`)
@@ -103,15 +109,21 @@ function  NewUserProfile() {
 		return loadingContent();
 
 	return (
-		<div className={`relative inset-0 ${open ? "opacity-50 filter blur-sm" : null}`}>
+		<div className={`relative inset-0 ${open && !stopDemoDisclaimer ? "opacity-50 filter blur-sm" : null}`}>
 			<div className="flex items-center xl:items-start flex-col xl:flex-row">
-				<DialogModal
+				{!stopDemoDisclaimer ? <DialogModal
 					open={open}
 					cancelButtonRef={cancelButtonRef}
 					closeModal={() => setOpen(false)}
 					title={DIALOGS["demoDisclaimer"].title}
 					body={DIALOGS["demoDisclaimer"].body}
-				/>
+					content={
+						<DontShowAgain 
+							stopDemoDisclaimer={stopDemoDisclaimer} 
+							setStopDemoDisclaimer={setStopDemoDisclaimer} />
+						}
+					contentBottom
+				/> : null}
 				<div className="board w-full mb-8 xl:mb-0 xl:w-3/5 relative bg-white">
 					<div>
 						<div className="flex items-center">
