@@ -1,10 +1,12 @@
 import { useRouter } from "next/dist/client/router";
 import React, { FC } from "react";
-import { MockService } from "../utils/types";
+import useAccount from "../contexts/account";
+import { AccountCtx, MockService } from "../utils/types";
 
 const ProofService: FC<{ service: MockService }> = ({ service }) => {
   const router = useRouter();
   const { logo, title, issuer, description } = service;
+  const accountCtx = useAccount() as AccountCtx;
   return (
     <div className="board">
       <div className="flex justify-start">
@@ -22,7 +24,7 @@ const ProofService: FC<{ service: MockService }> = ({ service }) => {
       <div className="flex w-full justify-end">
         <button
           className="btn-primary"
-          disabled={!service.cta}
+          disabled={!service.cta || !accountCtx?.openLogin}
           onClick={() =>
             service.cta
               ? router.push(`proof/${service.cta?.path as string}`)
@@ -32,6 +34,17 @@ const ProofService: FC<{ service: MockService }> = ({ service }) => {
           {service.cta?.title || "UNAVAILABLE"}
         </button>
       </div>
+
+      {!service.cta ? (
+        <p className="flex w-full justify-end mt-2 text-xs text-lDark italic">
+          This is mock data
+        </p>
+      ) : null}
+      {!accountCtx?.openLogin && service.cta ? (
+        <p className="flex w-full justify-end mt-2 text-xs text-lDark italic">
+          You need to be logged in. Try visiting the ID page.
+        </p>
+      ) : null}
     </div>
   );
 };
