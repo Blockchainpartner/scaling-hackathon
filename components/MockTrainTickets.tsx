@@ -20,7 +20,7 @@ const MockItem: FC<{ time: string; price: string }> = ({ time, price }) => {
         <p className="font-bold text-2xl mr-8">{price}</p>
         <button
           className="btn-primary h-12"
-          onClick={() => router.push("/proof/train/book")}
+          onClick={(): Promise<boolean> => router.push("/proof/train/book")}
         >
           BOOK
         </button>
@@ -29,7 +29,7 @@ const MockItem: FC<{ time: string; price: string }> = ({ time, price }) => {
   );
 };
 
-const MockTrainTickets = () => {
+const MockTrainTickets: FC = () => {
   return (
     <div className="grid grid-cols-1 gap-4 mt-8">
       <MockItem time="13:08 - 16:14" price="112,00€" />

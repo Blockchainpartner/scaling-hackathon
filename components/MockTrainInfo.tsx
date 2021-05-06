@@ -1,6 +1,6 @@
-import React from "react";
+import React, { FC } from "react";
 
-const MockTrainInfo = () => {
+const MockTrainInfo: FC = () => {
   return (
     <div className="board flex flex-col xl:flex-row items-start xl:items-center justify-between w-full xl:w-3/5">
       <div className="flex flex-col xl:flex-row items-start xl:items-center">

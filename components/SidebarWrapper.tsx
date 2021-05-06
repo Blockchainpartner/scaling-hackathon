@@ -7,6 +7,7 @@ import ProfileIcon from "./icons/ProfileIcon";
 
 const SidebarWrapper: FC<{ children: ReactNode }> = ({ children }) => {
   const TorusLogoutButton = dynamic(
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     () => import("../components/TorusLogout.tsx"),
     { ssr: false }

@@ -13,7 +13,7 @@ const VERIFIER = {
 
 const TorusSetup: FC = () => {
   const router = useRouter();
-  const accountCtx = useAccount() as AccountCtx
+  const accountCtx = useAccount() as AccountCtx;
   const [isLoading, setLoading] = useState(true);
 
   async function onMount() {
@@ -27,42 +27,45 @@ const TorusSetup: FC = () => {
       });
       await openlogin.init();
       accountCtx.set_openLogin(openlogin);
-    } catch(e) {
-      console.error(e)
+    } catch (e) {
+      console.error(e);
     } finally {
       setLoading(false);
     }
   }
 
   async function onLogin() {
-    if (isLoading || accountCtx.account?.privateKey)
-      return;
-    
+    if (isLoading || accountCtx.account?.privateKey) return;
+
     setLoading(true);
     try {
       await accountCtx.openLogin?.login({
         loginProvider: VERIFIER.loginProvider,
         redirectUrl: "http://localhost:3000",
       });
-    } catch(e) {
-      console.error(e)
+    } catch (e) {
+      console.error(e);
     } finally {
       setLoading(false);
     }
-  };
+  }
 
-  useClientEffect(() => onMount(), [])
+  useClientEffect(() => onMount(), []);
   useClientEffect(() => {
     if (accountCtx.account) {
-      router.push(`/identity`)
+      router.push(`/identity`);
     }
-  }, [accountCtx?.account?.privateKey])
+  }, [accountCtx?.account?.privateKey]);
 
   return (
     <button
       className="btn-primary mt-12 w-1/3 disabled:opacity-50 disabled:cursor-not-allowed"
       disabled={!accountCtx.openLogin || isLoading}
-      onClick={accountCtx.account?.privateKey ? () => router.push("/identity") : onLogin}
+      onClick={
+        accountCtx.account?.privateKey
+          ? () => router.push("/identity")
+          : onLogin
+      }
     >
       {isLoading ? "⏳" : "GET STARTED"}
     </button>

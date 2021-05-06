@@ -1,10 +1,10 @@
-import React from "react";
+import React, { FC } from "react";
 import CardDateIcon from "./icons/CardDateIcon";
 import CardNameIcon from "./icons/CardNameIcon";
 import CardNumberIcon from "./icons/CardNumberIcon";
 import CardZipIcon from "./icons/CardZipIcon";
 
-const TravelPayment = () => {
+const TravelPayment: FC = () => {
   return (
     <div className="board mt-8 w-2/3">
       <p className="font-semibold text-2xl text-lDark mb-4">Payment</p>

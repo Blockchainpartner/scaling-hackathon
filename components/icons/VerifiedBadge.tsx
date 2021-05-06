@@ -1,6 +1,6 @@
-import React from "react";
+import React, { FC } from "react";
 
-const VerifiedBadge = () => {
+const VerifiedBadge: FC = () => {
   return (
     <div className="flex flex-col items-center">
       <div className="flex justify-center items-center p-3 bg-lSuccess rounded-lg">

@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 
 const TorusTest = () => {
   const DynamicComponentWithNoSSR = dynamic(
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     () => import("../components/Torus.tsx"),
     { ssr: false }
@@ -35,7 +36,6 @@ const TorusTest = () => {
         <div className="my-8">
           <DynamicComponentWithNoSSR />
         </div>
-
       </main>
 
       <footer className="flex items-center justify-center w-full h-24 border-t">

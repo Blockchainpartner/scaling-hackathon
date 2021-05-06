@@ -18,7 +18,7 @@ const DontShowAgain: FC<Props> = ({
           checked={stopDemoDisclaimer}
           onChange={() => setStopDemoDisclaimer(!stopDemoDisclaimer)}
         />
-        <p className="ml-2 text-xs text-gray-700">Don't show this again</p>
+        <p className="ml-2 text-xs text-gray-700">{"Don't show this again"}</p>
       </label>
     </div>
   );

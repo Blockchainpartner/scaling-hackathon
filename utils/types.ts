@@ -1,5 +1,5 @@
-import  { ReactNode } from "react";
-import  OpenLogin from "@toruslabs/openlogin";
+import { ReactNode } from "react";
+import OpenLogin from "@toruslabs/openlogin";
 import { ethers } from "ethers";
 
 export type UserId = {
@@ -62,9 +62,8 @@ export type BackendUserID = {
       state: string;
       street: { number: number; name: string };
     };
-  }
+  };
 };
-
 
 export type MockService = {
   id: number;
@@ -87,6 +86,7 @@ export type DialogType = {
 export type AccountCtx = {
   account: ethers.Wallet;
   openLogin: OpenLogin;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   set_openLogin: (v: any) => void;
   user: BackendUserID;
   set_user: (v: BackendUserID) => void;

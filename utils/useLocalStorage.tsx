@@ -1,4 +1,6 @@
 import { useState } from "react";
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export default function useLocalStorage(key: string, initialValue: any) {
   const [storedValue, setStoredValue] = useState(() => {
       try {
@@ -8,6 +10,7 @@ export default function useLocalStorage(key: string, initialValue: any) {
         return initialValue;
       }
     }),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setValue = (value: any) => {
       try {
         const valueToStore =

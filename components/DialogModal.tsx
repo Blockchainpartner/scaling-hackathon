@@ -66,11 +66,15 @@ const DialogModal: FC<Props> = ({
                 {title}
               </Dialog.Title>
               <div className="mt-2">
-                {!contentBottom ? <div className="my-4">{content || null}</div> : null}
+                {!contentBottom ? (
+                  <div className="my-4">{content || null}</div>
+                ) : null}
                 <p className="text-sm text-gray-500 whitespace-pre-wrap	">
                   {body}
                 </p>
-                {contentBottom ? <div className="my-4">{content || null}</div> : null}
+                {contentBottom ? (
+                  <div className="my-4">{content || null}</div>
+                ) : null}
               </div>
 
               <div className="mt-4">

@@ -1,10 +1,10 @@
-import React from "react";
+import React, { FC } from "react";
 import useAccount from "../contexts/account";
 import { AccountCtx } from "../utils/types";
 import VerifiedBadge from "./icons/VerifiedBadge";
 
-const TravellerInfo = () => {
-	const accountCtx = useAccount() as AccountCtx;
+const TravellerInfo: FC = () => {
+  const accountCtx = useAccount() as AccountCtx;
   const user = accountCtx.user;
 
   return (
@@ -25,9 +25,7 @@ const TravellerInfo = () => {
               <p className="font-light text-lg">
                 {new Date(user.KYC.dob.date).toDateString()}
               </p>
-              <p className="font-light capitalize">
-                {user.KYC.gender}
-              </p>
+              <p className="font-light capitalize">{user.KYC.gender}</p>
             </div>
           </div>
           {user.isVerified ? <VerifiedBadge /> : null}

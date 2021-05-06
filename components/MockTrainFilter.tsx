@@ -1,6 +1,6 @@
-import React from "react";
+import React, { FC } from "react";
 
-const MockTrainFilter = () => {
+const MockTrainFilter: FC = () => {
   return (
     <div className="flex">
       <div className="flex flex-col items-start mr-10">

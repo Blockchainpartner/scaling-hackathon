@@ -1,8 +1,9 @@
-import React from "react";
+import React, { FC } from "react";
 import dynamic from "next/dynamic";
 
-const IndexPage = () => {
+const IndexPage: FC = () => {
   const TorusSetupButton = dynamic(
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     () => import("../components/TorusSetup.tsx"),
     { ssr: false }

@@ -22,6 +22,7 @@ const notLoggedIn = () => {
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const profile = (account: any, privKey: string, onLogout: () => void) => {
   return (
     <div className="flex items-start p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600">
@@ -63,7 +64,9 @@ const TorusInit: FC = () => {
   const [isLoading, setLoading] = useState(true);
   const [openlogin, setOpenLogin] = useState<undefined | OpenLogin>();
   const [privKey, setPrivKey] = useState<undefined | string>();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [torus, setTorus] = useState<any>();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [account, setAccount] = useState<any>();
 
   console.log("TORUS", torus);

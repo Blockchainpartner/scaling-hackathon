@@ -1,5 +1,7 @@
 import { useState } from "react";
-export default function useSessionStorage(key, initialValue) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export default function useSessionStorage(key: any, initialValue: any) {
   const [storedValue, setStoredValue] = useState(() => {
       try {
         const item = window.sessionStorage.getItem(key);
@@ -8,7 +10,8 @@ export default function useSessionStorage(key, initialValue) {
         return initialValue;
       }
     }),
-    setValue = (value) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    setValue = (value: any) => {
       try {
         const valueToStore =
           value instanceof Function ? value(storedValue) : value;
