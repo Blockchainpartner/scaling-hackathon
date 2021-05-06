@@ -42,7 +42,7 @@ const ProofService: FC<{ service: MockService }> = ({ service }) => {
       ) : null}
       {!accountCtx?.openLogin && service.cta ? (
         <p className="flex w-full justify-end mt-2 text-xs text-lDark italic">
-          You need to be logged in. Try visiting the ID page.
+          You need to be logged in. Try visiting the ID page on relogging in.
         </p>
       ) : null}
     </div>
