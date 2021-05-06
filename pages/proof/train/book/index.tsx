@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/dist/client/router";
 import DialogModal from "../../../../components/DialogModal";
 import CheckIcon from "../../../../components/icons/CheckIcon";
@@ -9,6 +9,7 @@ import SidebarWrapper from "../../../../components/SidebarWrapper";
 import TravelReductions from "../../../../components/TravelReductions";
 import { DIALOGS } from "../../../../utils/dialogs";
 import { REGISTRIES } from "../../../../utils/utils";
+import ProofVerificationContent from "../../../../components/ProofVerificationContent";
 
 const BookingScreen: FC = () => {
   const router = useRouter();
@@ -24,14 +25,15 @@ const BookingScreen: FC = () => {
   const generateProof = () => {
     setGeneratingProof(true);
     // TODO: Remove loader mocking
-    setTimeout(() => {
-      setGeneratingProof(false);
-      setProofGenerated(true);
-    }, 4000);
+    // setTimeout(() => {
+    //   setGeneratingProof(false);
+    //   setProofGenerated(true);
+    // }, 4000);
   };
 
   const cancelButtonRef = useRef(null);
   const closeModal = () => {
+    if (generatingProof) setGeneratingProof(false);
     if (proofGenerated) setProofGenerated(false);
   };
 
@@ -41,20 +43,11 @@ const BookingScreen: FC = () => {
     senior: false,
   });
 
-  const updateReductions = (e: ChangeEvent<HTMLInputElement>) => {
-    const tg = e.target;
-    const name = tg.name;
-    const value = tg.checked;
-    setReductions({ ...reductions, [name]: value });
-  };
-
   useEffect(() => {
     if (reductions[REGISTRIES.DISABILITY]) {
       setPrice(88);
-      generateProof();
     } else if (reductions[REGISTRIES.YOUNG] || reductions[REGISTRIES.OLD]) {
       setPrice(97);
-      generateProof();
     } else {
       setPrice(112);
     }
@@ -88,7 +81,7 @@ const BookingScreen: FC = () => {
           }
           content={
             generatingProof ? (
-              <div className="donutSpinner" />
+              <ProofVerificationContent />
             ) : (
               <CheckIcon color="#0CAB2C" />
             )
@@ -106,6 +99,7 @@ const BookingScreen: FC = () => {
             setProof={setProof}
             reductions={reductions}
             setReductions={setReductions}
+            generateProof={generateProof}
           />
           <div className="flex items-center mt-6">
             <InfoIcon color="black" />

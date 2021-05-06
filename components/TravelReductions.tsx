@@ -18,12 +18,14 @@ type Props = {
   setProof: (v: any) => void;
   reductions: { [key: string]: boolean };
   setReductions: (v: { [key: string]: boolean }) => void;
+  generateProof: () => void;
 };
 
 const TravelReductions: FC<Props> = ({
   setProof,
   reductions,
   setReductions,
+  generateProof,
 }) => {
   const accountCtx = useAccount() as AccountCtx;
   const { addToast } = useToasts();
@@ -59,6 +61,7 @@ const TravelReductions: FC<Props> = ({
   }
 
   async function claimDiscount(registryKey: string) {
+    generateProof();
     const address = accountCtx.account.address;
     const privateKey = accountCtx.account.privateKey;
     const secret = await hashSecret(registryKey, modCairoPrime(privateKey));
@@ -69,7 +72,7 @@ const TravelReductions: FC<Props> = ({
         { address, secret }
       );
       if (res.status === 200) {
-        addToast("proof submited", { appearance: "success" });
+        addToast("The proof is submited", { appearance: "success" });
         let proof = res.data.proof;
         let registryHash = res.data.hash;
 
