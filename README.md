@@ -21,5 +21,5 @@ yarn run start
 ```
 
 ### Other repos
-[Backend repo](https://github.com/Blockchainpartner/scaling-hackathon-backend)
+[Backend repo](https://github.com/Blockchainpartner/scaling-hackathon-backend)  
 [Contract repo](https://github.com/Blockchainpartner/scaling-hackathon-contract)
