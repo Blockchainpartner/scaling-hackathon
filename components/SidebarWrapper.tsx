@@ -19,8 +19,8 @@ const SidebarWrapper: FC<{ children: ReactNode }> = ({ children }) => {
     <div className="bg-bg flex min-h-screen w-full">
       <nav className="bg-dark w-20 h-screen fixed flex flex-col items-center justify-between py-2">
         <div>
-          <div className="sidebtn" onClick={() => router.push("/")}>
-            <img src="/images/turbo.svg" alt="Sidebar icon" className="p-2" />
+          <div className="sidebtn bg-white" onClick={() => router.push("/")}>
+            <img src="/images/alexandria.png" alt="Sidebar icon" className="p-2" />
           </div>
           <div className="h-1 w-1/2 bg-white rounded-sm my-4 mx-auto" />
           <div
