@@ -55,7 +55,7 @@ const TorusSetup: FC = () => {
     if (accountCtx.account) {
       router.push(`/identity`);
     }
-  }, [accountCtx?.account?.privateKey]);
+  }, [accountCtx?.account?.privateKey as never]);
 
   return (
     <button

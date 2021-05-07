@@ -56,7 +56,7 @@ const TravelReductions: FC<{
     generateProof();
     const address = accountCtx.account.address;
     const privateKey = accountCtx.account.privateKey;
-    const secret = await hashSecret(registryKey, modCairoPrime(privateKey));
+    const secret = await hashSecret(registryKey, modCairoPrime(privateKey) as any);
 
     try {
       const res = await axios.post(

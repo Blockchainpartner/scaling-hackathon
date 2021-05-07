@@ -25,11 +25,6 @@ const prime = new BN(
   "800000000000011000000000000000000000000000000000000000000000001",
   16
 );
-// Equals 2**251. This value limits msgHash and the signature parts.
-const maxEcdsaVal = new BN(
-  "800000000000000000000000000000000000000000000000000000000000000",
-  16
-);
 
 // Generate BN of used constants.
 const zeroBn = new BN("0", 16);
@@ -84,11 +79,13 @@ function pedersen(input: string | any[]) {
   return point.getX().toString(16);
 }
 
-module.exports = {
-  prime,
-  ec: starkEc,
-  constantPoints,
-  shiftPoint,
-  maxEcdsaVal, // Data.
-  pedersen, // Function.
-};
+// module.exports = {
+//   prime,
+//   ec: starkEc,
+//   constantPoints,
+//   shiftPoint,
+//   maxEcdsaVal, // Data.
+//   pedersen, // Function.
+// };
+
+export {pedersen};

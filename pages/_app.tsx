@@ -39,17 +39,17 @@ function WrapperApp({ Component, pageProps }: AppProps) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     channelClaims.bind("processClaim", function (data: any) {
       const { registry, step, type } = data;
-      console.log(`${registry}: ${step}`);
+      console.log(`${registry}: ${step} ${type}`);
       if (registry === REGISTRIES.YOUNG) {
-        addToast(`12-24 discount: ${step}`, { appearance: type || "info" });
+        // addToast(`12-24 discount: ${step}`, { appearance: type || "info" });
       } else if (registry === REGISTRIES.OLD) {
-        addToast(`60+ discount: ${step}`, { appearance: type || "info" });
+        // addToast(`60+ discount: ${step}`, { appearance: type || "info" });
       } else if (registry === REGISTRIES.DISABILITY) {
-        addToast(`Disability discount: ${step}`, {
-          appearance: type || "info",
-        });
+        // addToast(`Disability discount: ${step}`, {
+        //   appearance: type || "info",
+        // });
       } else {
-        addToast(step, { appearance: type || "info" });
+        // addToast(step, { appearance: type || "info" });
       }
     });
   }, []);

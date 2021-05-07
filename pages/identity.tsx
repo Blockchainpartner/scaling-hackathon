@@ -62,17 +62,17 @@ function NewUserProfile() {
     const registry0 = await hashData(
       registries[0],
       accountCtx?.account?.address,
-      modCairoPrime(accountCtx?.account?.privateKey)
+      modCairoPrime(accountCtx?.account?.privateKey) as string
     );
     const registry1 = await hashData(
       registries[1],
       accountCtx?.account?.address,
-      modCairoPrime(accountCtx?.account?.privateKey)
+      modCairoPrime(accountCtx?.account?.privateKey) as string
     );
     const registry2 = await hashData(
       registries[2],
       accountCtx?.account?.address,
-      modCairoPrime(accountCtx?.account?.privateKey)
+      modCairoPrime(accountCtx?.account?.privateKey) as string
     );
     const newUser = {
       UUID: user.login.uuid,
