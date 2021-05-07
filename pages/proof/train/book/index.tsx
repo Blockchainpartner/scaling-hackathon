@@ -1,37 +1,45 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/dist/client/router";
 import DialogModal from "../../../../components/DialogModal";
-import CheckIcon from "../../../../components/icons/CheckIcon";
 import InfoIcon from "../../../../components/icons/InfoIcon";
 import MockTrainInfo from "../../../../components/MockTrainInfo";
 import ScreenTitle from "../../../../components/ScreenTitle";
 import SidebarWrapper from "../../../../components/SidebarWrapper";
 import TravelReductions from "../../../../components/TravelReductions";
 import { DIALOGS } from "../../../../utils/dialogs";
+import ProofVerificationContent from "../../../../components/ProofVerificationContent";
 
 const BookingScreen: FC = () => {
   const router = useRouter();
-
   const [price, setPrice] = useState(112);
-
-  //TODO: Integrate proof
   const [proof] = useState(true);
   const [generatingProof, setGeneratingProof] = useState(false);
   const [proofGenerated, setProofGenerated] = useState(false);
+  const [proofFailed, setProofFailed] = useState(false);
+  const [proofStatus, setProofStatus] = useState<string | undefined>();
 
-  //TODO: Integrate proof generation
-  const generateProof = () => {
-    setGeneratingProof(true);
-    // TODO: Remove loader mocking
-    setTimeout(() => {
-      setGeneratingProof(false);
+  const generateProof = (success?: string, error?: string) => {
+    if (!generatingProof) {
+      setGeneratingProof(true);
+    }
+    if (success && success?.length > 0) {
       setProofGenerated(true);
-    }, 4000);
+      setProofStatus(success);
+    }
+    if (error && error?.length > 0) {
+      setProofFailed(true);
+      setProofStatus(error);
+    }
   };
 
   const cancelButtonRef = useRef(null);
   const closeModal = () => {
-    if (proofGenerated) setProofGenerated(false);
+    if (proofGenerated || proofFailed) {
+      setGeneratingProof(false);
+      setProofGenerated(false);
+      setProofFailed(false);
+      setProofStatus(undefined);
+    }
   };
 
   const [reductions] = useState<{ [key: string]: boolean }>({
@@ -42,10 +50,8 @@ const BookingScreen: FC = () => {
   useEffect(() => {
     if (reductions.disability) {
       setPrice(88);
-      generateProof();
     } else if (reductions.young) {
       setPrice(97);
-      generateProof();
     } else {
       setPrice(112);
     }
@@ -60,28 +66,38 @@ const BookingScreen: FC = () => {
     <SidebarWrapper>
       <div
         className={`relative inset-0 ${
-          generatingProof || proofGenerated ? "opacity-50 filter blur-sm" : null
+          generatingProof ? "opacity-50 filter blur-sm" : null
         }`}
       >
         <DialogModal
-          open={generatingProof || proofGenerated}
+          open={generatingProof}
           cancelButtonRef={cancelButtonRef}
           closeModal={closeModal}
           title={
             generatingProof
               ? DIALOGS.proofGenLoading.title
-              : DIALOGS.proofGenDone.title
+              : proofGenerated
+              ? DIALOGS.proofGenDone.title
+              : ""
           }
           body={
             generatingProof
               ? DIALOGS.proofGenLoading.body
-              : DIALOGS.proofGenDone.body
+              : proofGenerated
+              ? DIALOGS.proofGenDone.body
+              : ""
           }
           content={
-            generatingProof ? (
-              <div className="donutSpinner" />
+            proofFailed ? (
+              <ProofVerificationContent
+                error={proofFailed ? proofStatus : undefined}
+              />
+            ) : proofGenerated ? (
+              <ProofVerificationContent
+                success={proofGenerated ? proofStatus : undefined}
+              />
             ) : (
-              <CheckIcon color="#0CAB2C" />
+              <ProofVerificationContent />
             )
           }
         />
@@ -93,7 +109,7 @@ const BookingScreen: FC = () => {
         <div>
           <MockTrainInfo />
           {/* <TravellerInfo /> */}
-          <TravelReductions />
+          <TravelReductions generateProof={generateProof} />
           <div className="flex items-center mt-6">
             <InfoIcon color="black" />
             <p className="text-sm ml-2">

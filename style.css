@@ -70,6 +70,11 @@
     animation: donut-spin 1.2s linear infinite;
   }
 
+  .donutSpinner.smallSpinner {
+    width: 24px;
+    height: 24px;
+  }
+
   @keyframes donut-spin {
     to {
       transform: rotate(1turn);

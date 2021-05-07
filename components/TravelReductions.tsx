@@ -14,7 +14,9 @@ import CouponIcon from "./icons/CouponIcon";
 import YoungIcon from "./icons/SupportIcon";
 import SupportIcon from "./icons/YoungIcon";
 
-const TravelReductions: FC = () => {
+const TravelReductions: FC<{
+  generateProof: (s?: string, e?: string) => void;
+}> = ({ generateProof }) => {
   const accountCtx = useAccount() as AccountCtx;
   const { addToast } = useToasts();
 
@@ -42,13 +44,16 @@ const TravelReductions: FC = () => {
     );
     if (identityIsProved) {
       addToast("The proof is valid", { appearance: "success" });
+      generateProof("The proof is valid", "");
     } else {
       addToast("The proof is not valid", { appearance: "error" });
+      generateProof("", "The proof is not valid");
     }
     return identityIsProved;
   }
 
   async function claimDiscount(registryKey: string) {
+    generateProof();
     const address = accountCtx.account.address;
     const privateKey = accountCtx.account.privateKey;
     const secret = await hashSecret(registryKey, modCairoPrime(privateKey));
@@ -59,7 +64,7 @@ const TravelReductions: FC = () => {
         { address, secret }
       );
       if (res.status === 200) {
-        addToast("proof submited", { appearance: "success" });
+        addToast("The proof is submited", { appearance: "success" });
         let proof = res.data.proof;
         let registryHash = res.data.hash;
 
@@ -68,9 +73,11 @@ const TravelReductions: FC = () => {
         checkProof(registryKey, proof, registryHash);
       } else {
         addToast("Impossible prove this claim", { appearance: "error" });
+        generateProof("", "Impossible to prove this claim");
       }
     } catch (error) {
       addToast("Impossible prove this claim", { appearance: "error" });
+      generateProof("", "Impossible to prove this claim");
     }
   }
 
