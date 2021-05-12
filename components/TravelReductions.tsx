@@ -14,9 +14,16 @@ import CouponIcon from "./icons/CouponIcon";
 import YoungIcon from "./icons/SupportIcon";
 import SupportIcon from "./icons/YoungIcon";
 
-const TravelReductions: FC<{
+type Props = {
   generateProof: (s?: string, e?: string) => void;
-}> = ({ generateProof }) => {
+  reductions: { [key: string]: boolean };
+  setReductions: (reduction: { [key: string]: boolean }) => void;
+};
+const TravelReductions: FC<Props> = ({
+  generateProof,
+  reductions,
+  setReductions,
+}) => {
   const accountCtx = useAccount() as AccountCtx;
   const { addToast } = useToasts();
 
@@ -53,10 +60,14 @@ const TravelReductions: FC<{
   }
 
   async function claimDiscount(registryKey: string) {
+    setReductions({ ...reductions, [registryKey.toLocaleLowerCase()]: true });
     generateProof();
     const address = accountCtx.account.address;
     const privateKey = accountCtx.account.privateKey;
-    const secret = await hashSecret(registryKey, modCairoPrime(privateKey) as any);
+    const secret = await hashSecret(
+      registryKey,
+      modCairoPrime(privateKey) as any
+    );
 
     try {
       const res = await axios.post(
@@ -87,7 +98,9 @@ const TravelReductions: FC<{
       <div className="flex flex-col xl:flex-row m-auto xl:m-0 w-full">
         <div
           onClick={() => claimDiscount(REGISTRIES.DISABILITY)}
-          className="board mt-4 w-1/3 mr-4 hover:shadow transition-all hover:border-brand border-2 hover:cursor-pointer"
+          className={`board mt-4 w-1/3 mr-4 hover:shadow transition-all hover:border-brand border-2 hover:cursor-pointer ${
+            reductions.disability ? "border-brand" : ""
+          }`}
         >
           <div className="flex items-center justify-start relative">
             <SupportIcon color="#1F169C" />
@@ -100,7 +113,9 @@ const TravelReductions: FC<{
 
         <div
           onClick={() => claimDiscount(REGISTRIES.YOUNG)}
-          className="board mt-4 w-1/3 mr-4 hover:shadow transition-all hover:border-brand border-2 hover:cursor-pointer"
+          className={`board mt-4 w-1/3 mr-4 hover:shadow transition-all hover:border-brand border-2 hover:cursor-pointer ${
+            reductions.young ? "border-brand" : ""
+          }`}
         >
           <div className="flex items-center justify-start relative">
             <YoungIcon color="#1F169C" />
@@ -108,12 +123,14 @@ const TravelReductions: FC<{
               12-27 yo reduced fare
             </p>
           </div>
-          <p className="font-bold text-2xl mt-2">97,00€</p>
+          <p className="font-bold text-2xl mt-2">80,00€</p>
         </div>
 
         <div
           onClick={() => claimDiscount(REGISTRIES.OLD)}
-          className="board mt-4 w-1/3 mr-4 hover:shadow transition-all hover:border-brand border-2 hover:cursor-pointer"
+          className={`board mt-4 w-1/3 mr-4 hover:shadow transition-all hover:border-brand border-2 hover:cursor-pointer ${
+            reductions.old ? "border-brand" : ""
+          }`}
         >
           <div className="flex items-center justify-start relative">
             <CouponIcon color="#1F169C" />

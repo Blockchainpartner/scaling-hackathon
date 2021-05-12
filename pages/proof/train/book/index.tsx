@@ -42,16 +42,17 @@ const BookingScreen: FC = () => {
     }
   };
 
-  const [reductions] = useState<{ [key: string]: boolean }>({
+  const [reductions, setReductions] = useState<{ [key: string]: boolean }>({
     disability: false,
     young: false,
+    old: false,
   });
 
   useEffect(() => {
     if (reductions.disability) {
       setPrice(88);
     } else if (reductions.young) {
-      setPrice(97);
+      setPrice(80);
     } else {
       setPrice(112);
     }
@@ -109,7 +110,11 @@ const BookingScreen: FC = () => {
         <div>
           <MockTrainInfo />
           {/* <TravellerInfo /> */}
-          <TravelReductions generateProof={generateProof} />
+          <TravelReductions
+            generateProof={generateProof}
+            reductions={reductions}
+            setReductions={setReductions}
+          />
           <div className="flex items-center mt-6">
             <InfoIcon color="black" />
             <p className="text-sm ml-2">

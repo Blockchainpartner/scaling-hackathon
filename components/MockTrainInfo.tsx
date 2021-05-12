@@ -15,7 +15,7 @@ const MockTrainInfo: FC = () => {
         </div>
       </div>
       <div className="flex flex-col xl:flex-row items-start xl:items-center">
-        <p className="font-bold text-2xl mr-8">120,00€</p>
+        <p className="font-bold text-2xl mr-8">112,00€</p>
       </div>
     </div>
   );
