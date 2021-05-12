@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 
-const MockTrainInfo: FC = () => {
+const MockTrainInfo: FC<{ price: string }> = ({ price }) => {
   return (
     <div className="board flex flex-col xl:flex-row items-start xl:items-center justify-between w-full xl:w-3/5">
       <div className="flex flex-col xl:flex-row items-start xl:items-center">
@@ -15,7 +15,7 @@ const MockTrainInfo: FC = () => {
         </div>
       </div>
       <div className="flex flex-col xl:flex-row items-start xl:items-center">
-        <p className="font-bold text-2xl mr-8">112,00€</p>
+        <p className="font-bold text-2xl mr-8">{price}</p>
       </div>
     </div>
   );

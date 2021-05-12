@@ -53,7 +53,7 @@ const PayScreen: FC = () => {
           hasBack
         />
         <div>
-          <MockTrainInfo />
+          <MockTrainInfo price={"88,00€"} />
           {/* <TravellerInfo /> */}
           <div className="board border-2 border-brand w-1/5 p-3 mt-8">
             <p className="font-semibold text-lg">

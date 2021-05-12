@@ -63,6 +63,8 @@ const BookingScreen: FC = () => {
   const disabledBook =
     (reductions.disability || reductions.young) && proof === undefined;
 
+    console.log("REDUX", reductions)
+
   return (
     <SidebarWrapper>
       <div
@@ -108,12 +110,14 @@ const BookingScreen: FC = () => {
           hasBack
         />
         <div>
-          <MockTrainInfo />
+          <MockTrainInfo price={"112,00€"} />
           {/* <TravellerInfo /> */}
           <TravelReductions
             generateProof={generateProof}
             reductions={reductions}
             setReductions={setReductions}
+            proofGenerated={proofGenerated}
+            proofFailed={proofFailed}
           />
           <div className="flex items-center mt-6">
             <InfoIcon color="black" />

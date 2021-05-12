@@ -18,11 +18,15 @@ type Props = {
   generateProof: (s?: string, e?: string) => void;
   reductions: { [key: string]: boolean };
   setReductions: (reduction: { [key: string]: boolean }) => void;
+  proofGenerated: boolean;
+  proofFailed: boolean;
 };
 const TravelReductions: FC<Props> = ({
   generateProof,
   reductions,
   setReductions,
+  proofGenerated,
+  proofFailed,
 }) => {
   const accountCtx = useAccount() as AccountCtx;
   const { addToast } = useToasts();
@@ -92,15 +96,19 @@ const TravelReductions: FC<Props> = ({
     }
   }
 
+  const highlight = (regKey: string) =>
+    reductions[regKey] && !proofFailed && proofGenerated ? "border-brand" : "";
+  // const errorHighlight = (regKey: string) => reductions[regKey] && proofFailed && !proofGenerated ? "border-danger" : ""
+
   return (
     <div className="flex flex-col items-start mt-8">
       <p className="font-semibold text-2xl text-lDark">Price reductions</p>
       <div className="flex flex-col xl:flex-row m-auto xl:m-0 w-full">
         <div
           onClick={() => claimDiscount(REGISTRIES.DISABILITY)}
-          className={`board mt-4 w-1/3 mr-4 hover:shadow transition-all hover:border-brand border-2 hover:cursor-pointer ${
-            reductions.disability ? "border-brand" : ""
-          }`}
+          className={`board mt-4 w-1/3 mr-4 hover:shadow transition-all hover:border-brand border-2 hover:cursor-pointer ${highlight(
+            REGISTRIES.DISABILITY
+          )}`}
         >
           <div className="flex items-center justify-start relative">
             <SupportIcon color="#1F169C" />
@@ -113,9 +121,9 @@ const TravelReductions: FC<Props> = ({
 
         <div
           onClick={() => claimDiscount(REGISTRIES.YOUNG)}
-          className={`board mt-4 w-1/3 mr-4 hover:shadow transition-all hover:border-brand border-2 hover:cursor-pointer ${
-            reductions.young ? "border-brand" : ""
-          }`}
+          className={`board mt-4 w-1/3 mr-4 hover:shadow transition-all hover:border-brand border-2 hover:cursor-pointer ${highlight(
+            REGISTRIES.YOUNG
+          )}`}
         >
           <div className="flex items-center justify-start relative">
             <YoungIcon color="#1F169C" />
@@ -128,9 +136,9 @@ const TravelReductions: FC<Props> = ({
 
         <div
           onClick={() => claimDiscount(REGISTRIES.OLD)}
-          className={`board mt-4 w-1/3 mr-4 hover:shadow transition-all hover:border-brand border-2 hover:cursor-pointer ${
-            reductions.old ? "border-brand" : ""
-          }`}
+          className={`board mt-4 w-1/3 mr-4 hover:shadow transition-all hover:border-brand border-2 hover:cursor-pointer ${highlight(
+            REGISTRIES.OLD
+          )}`}
         >
           <div className="flex items-center justify-start relative">
             <CouponIcon color="#1F169C" />
