@@ -187,6 +187,7 @@ function NewUserProfile() {
                 info={`${user.location.city}, ${user.location.state}`}
               />
               <IdInfoItem label="Country" info={user.location.country} />
+              <IdInfoItem label="Disabled" info={"Yes"} />
             </div>
           </div>
         </div>
