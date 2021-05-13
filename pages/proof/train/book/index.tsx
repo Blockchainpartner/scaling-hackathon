@@ -24,9 +24,11 @@ const BookingScreen: FC = () => {
     }
     if (success && success?.length > 0) {
       setProofGenerated(true);
+      setProofFailed(false);
       setProofStatus(success);
     }
     if (error && error?.length > 0) {
+      setProofGenerated(false);
       setProofFailed(true);
       setProofStatus(error);
     }
@@ -36,8 +38,8 @@ const BookingScreen: FC = () => {
   const closeModal = () => {
     if (proofGenerated || proofFailed) {
       setGeneratingProof(false);
-      setProofGenerated(false);
-      setProofFailed(false);
+      // setProofGenerated(false);
+      // setProofFailed(false);
       setProofStatus(undefined);
     }
   };
