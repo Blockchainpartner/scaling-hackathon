@@ -34,7 +34,8 @@ const TravelReductions: FC<Props> = ({
   async function checkProof(
     registryKey: string,
     hash: string,
-    registryHash: string
+    registryHash: string,
+    reduction: string
   ) {
     const provider = new ethers.providers.AlchemyProvider(
       "ropsten",
@@ -54,6 +55,7 @@ const TravelReductions: FC<Props> = ({
       registryHash
     );
     if (identityIsProved) {
+      setReductions({ ...reductions, [reduction]: true });
       addToast("The proof is valid", { appearance: "success" });
       generateProof("The proof is valid", "");
     } else {
@@ -63,8 +65,7 @@ const TravelReductions: FC<Props> = ({
     return identityIsProved;
   }
 
-  async function claimDiscount(registryKey: string) {
-    setReductions({ ...reductions, [registryKey.toLocaleLowerCase()]: true });
+  async function claimDiscount(registryKey: string, reduction: string) {
     generateProof();
     const address = accountCtx.account.address;
     const privateKey = accountCtx.account.privateKey;
@@ -85,7 +86,7 @@ const TravelReductions: FC<Props> = ({
 
         if (proof[0] === "-") proof = addCairoPrime(proof);
         if (registryHash[0] === "-") registryHash = addCairoPrime(registryHash);
-        checkProof(registryKey, proof, registryHash);
+        checkProof(registryKey, proof, registryHash, reduction);
       } else {
         addToast("Impossible prove this claim", { appearance: "error" });
         generateProof("", "Impossible to prove this claim");
@@ -96,8 +97,10 @@ const TravelReductions: FC<Props> = ({
     }
   }
 
-  const highlight = (regKey: string) =>
-    reductions[regKey] && !proofFailed && proofGenerated ? "border-brand" : "";
+  const highlight = (reduction: string) =>
+    reductions[reduction] && !proofFailed && proofGenerated
+      ? "border-brand"
+      : "";
   // const errorHighlight = (regKey: string) => reductions[regKey] && proofFailed && !proofGenerated ? "border-danger" : ""
 
   return (
@@ -105,9 +108,9 @@ const TravelReductions: FC<Props> = ({
       <p className="font-semibold text-2xl text-lDark">Price reductions</p>
       <div className="flex flex-col xl:flex-row m-auto xl:m-0 w-full">
         <div
-          onClick={() => claimDiscount(REGISTRIES.DISABILITY)}
+          onClick={() => claimDiscount(REGISTRIES.DISABILITY, "disability")}
           className={`board mt-4 w-1/3 mr-4 hover:shadow transition-all hover:border-brand border-2 hover:cursor-pointer ${highlight(
-            REGISTRIES.DISABILITY
+            "disability"
           )}`}
         >
           <div className="flex items-center justify-start relative">
@@ -120,9 +123,9 @@ const TravelReductions: FC<Props> = ({
         </div>
 
         <div
-          onClick={() => claimDiscount(REGISTRIES.YOUNG)}
+          onClick={() => claimDiscount(REGISTRIES.YOUNG, "young")}
           className={`board mt-4 w-1/3 mr-4 hover:shadow transition-all hover:border-brand border-2 hover:cursor-pointer ${highlight(
-            REGISTRIES.YOUNG
+            "young"
           )}`}
         >
           <div className="flex items-center justify-start relative">
@@ -135,9 +138,9 @@ const TravelReductions: FC<Props> = ({
         </div>
 
         <div
-          onClick={() => claimDiscount(REGISTRIES.OLD)}
+          onClick={() => claimDiscount(REGISTRIES.OLD, "old")}
           className={`board mt-4 w-1/3 mr-4 hover:shadow transition-all hover:border-brand border-2 hover:cursor-pointer ${highlight(
-            REGISTRIES.OLD
+            "old"
           )}`}
         >
           <div className="flex items-center justify-start relative">
